@@ -62,7 +62,7 @@ public class BinarySearchTree {
     }
 
     private TreeNode deleteRec(TreeNode root, int value){
-        if(root == null){
+        if(root == null){ //if the tree is empty
             return root;
         }
         //the node will choose which direction it will take, and then, after reaching an end or the right place, it will come back "setting up its path"
@@ -93,5 +93,50 @@ public class BinarySearchTree {
             root = root.getLeft();
         }
         return minValue;
+    }
+
+    public void preOrderTraversal(){
+        preOrderTraversalRec(root);
+    }
+
+    private void preOrderTraversalRec(TreeNode root){
+        if(root == null){ //if end of the tree, do nothing
+            return;
+        }
+        System.out.print(root.getValue() + " "); //print node's value
+        preOrderTraversalRec(root.getLeft()); //go to left, therefore printing all left nodes
+        preOrderTraversalRec(root.getRight()); //go to right, therefore printing all right nodes after the left ones
+    }
+
+    public void postOrderTraversal(){
+        postOrderTraversalRec(root);
+    }
+
+    private void postOrderTraversalRec(TreeNode root){
+        if(root == null){ //if end of the tree, do nothing
+            return;
+        }
+        //just like preorder, by calling both left and right, the printing of all left and right nodes is guaranteed
+        postOrderTraversalRec(root.getLeft());
+        postOrderTraversalRec(root.getRight());
+        System.out.print(root.getValue() + " "); //by calling print after both recursions, the printing will start from the bottom of the tree
+    }
+
+    public int getHeight(){
+        return getHeightRec(root);
+    }
+
+    private int getHeightRec(TreeNode root){
+        if(root == null){ //if end of the tree
+            return 0;
+        }
+        int l = getHeightRec(root.getLeft()); //go to left, therefore reaching the left bottom
+        int r = getHeightRec(root.getRight()); //go to right, therefore reaching the right bottom
+        if (l > r){ //if-else to choose the greater bottom and incrementing 1
+            return l + 1;
+        }
+        else{
+            return r + 1;
+        }
     }
 }
