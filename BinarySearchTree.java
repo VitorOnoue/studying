@@ -1,5 +1,6 @@
 public class BinarySearchTree {
     private TreeNode root; //current node
+
     public BinarySearchTree(){
         root = null; //as you create a bst, there will be no nodes yet, so the current node is null
     }
@@ -24,16 +25,16 @@ public class BinarySearchTree {
         }
     }
 
-    public void inorderTraversal(){
-        inorderTraversalRec(root);
+    public void inOrderTraversal(){
+        inOrderTraversalRec(root);
     }
 
-    private void inorderTraversalRec(TreeNode root){ //print the values ascending
+    private void inOrderTraversalRec(TreeNode root){ //print the values ascending
         if(root != null){ //if there is a node
-            inorderTraversalRec(root.getLeft()); /*go for the left node (this will happen until you reach the 
+            inOrderTraversalRec(root.getLeft()); /*go for the left node (this will happen until you reach the 
             smallest value; when it does, it will come back exactly in this line as the smallest value wont have any left/right)*/
             System.out.print(root.getValue() + " "); //print nodes value
-            inorderTraversalRec(root.getRight()); //go for the right node
+            inOrderTraversalRec(root.getRight()); //go for the right node
         } //if the root is null, the branch reached its end
     }
 
@@ -130,13 +131,38 @@ public class BinarySearchTree {
         if(root == null){ //if end of the tree
             return 0;
         }
-        int l = getHeightRec(root.getLeft()); //go to left, therefore reaching the left bottom
-        int r = getHeightRec(root.getRight()); //go to right, therefore reaching the right bottom
-        if (l > r){ //if-else to choose the greater bottom and incrementing 1
-            return l + 1;
+        else{
+            int l = getHeightRec(root.getLeft()); //go to left, therefore reaching the left bottom
+            int r = getHeightRec(root.getRight()); //go to right, therefore reaching the right bottom
+            if (l > r){ //if-else to choose the greater bottom and incrementing 1
+                return l + 1;
+            }
+            else{
+                return r + 1;
+            }
+        }
+    }
+
+    public int getDegree(int value){ //degree = how many nodes it has associated
+        int count = 0; //node counter
+        TreeNode x = searchNode(root, value); //searching for the node that contains the value
+        if(root == null){
+            return -1; //treat it as a not found
+        }
+        count += x.getLeft() != null ? 1 : 0; //if that node has a left, +1
+        count += x.getRight() != null ? 1 : 0; //if it has a right, +1
+        return count;
+    }
+
+    private TreeNode searchNode(TreeNode root, int value){
+        if(root == null || root.getValue() == value){ //if the tree is empty/
+            return root;
+        }
+        if(value < root.getValue()){
+            return searchNode(root.getLeft(), value);
         }
         else{
-            return r + 1;
+            return searchNode(root.getRight(), value);
         }
     }
 }
