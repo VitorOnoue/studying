@@ -8,12 +8,15 @@ Vitor Kenzo Koga Onoue - 32246315
 .trim().replaceAll("\\s+", ""); = remove espaços no começo, meio e fim
 */
 
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.Scanner;
 
 public class Main {
   public static void main(String[] args) {
 
     Scanner s = new Scanner(System.in);
+    BinaryTree bt;
     String infixa;
     boolean x = true;
     while (x) {
@@ -43,17 +46,20 @@ public class Main {
         case 2:
           System.out.println("Criando árvore binária");
           // construir a arvore
+          bt = new BinaryTree();
           ValidaArvore(arvore);
           break;
 
         case 3:
           System.out.println("Exibindo a árvore binária");
-          ImprimeArvore(arvore);
+          bt.preOrderTraversal();
+          bt.postOrderTraversal();
+          bt.inOrderTraversal();
           break;
 
         case 4:
           System.out.println("Calculando sua expressão: ");
-          CalculoExpressao(arvore);
+          bt.result();
           break;
 
         case 5:
@@ -70,47 +76,52 @@ public class Main {
   }
 
   public static boolean isValid(String str){
-    int par = 0;
+    int count = 0;
+    if(str == ""){
+      return false;
+    }
+    Deque<Character> s = new ArrayDeque<Character>();
+    if(isOp(str.charAt(0)) || isOp(str.charAt(str.length()-1))){
+      return false;
+    }
     for(int i = 0; i < str.length(); i++){
       char x = str.charAt(i);
-      System.out.println(x);
       if(x == '('){
-        par++;
-        continue;
+        if(str.charAt(i+1) == ')'){
+          return false;
+        }
+        s.push(x);
       }
       else if(x == ')'){
-        par--;
-        continue;
-      }
-      else if(Character.isLetter(x)){
-        System.out.println("letter");
-        return false;
-      }
-      else if(x == '.'){
-        if(!Character.isDigit(str.charAt(i-1)) && !Character.isDigit(str.charAt(i+1))){
-          System.out.println("ponto perdido");
+        if(!s.isEmpty()){
+          char y = s.pop();
+          if(y != '('){
+            return false;
+          }
+        }
+        else{
           return false;
         }
-        continue;
       }
       else if(isOp(x)){
-        if(i == 0 || i == str.length() - 1){
-          System.out.println("operador sem dois");
+        count++;
+        if(isOp(str.charAt(i-1))){
           return false;
         }
       }
-      if(!(isOp(x) || Character.isDigit(x))){
-        System.out.println("operador invalido ou não é numero");
+      else if(Character.isDigit(x) || x == '.'){
+        continue;
+      }
+      else{
         return false;
       }
     }
-    if(par != 0){
-      System.out.println("parenteses nao fechou");
+    if(!s.isEmpty() || count == 0){
       return false;
     }
     return true;
   }
-  
+    
   public static boolean isOp(char x){
     if (x == '+' || x == '-' || x == '*' || x == '/' || x == '–'){
       return true;

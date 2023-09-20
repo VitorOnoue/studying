@@ -19,6 +19,7 @@
 // imports para a fila usada na levelOrderTraversalHelper(). 
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Deque;
 
 public class BinaryTree {
 
@@ -30,6 +31,21 @@ public class BinaryTree {
 
   public BinaryTree(BTNode root) {
     this.root = root;
+  }
+
+  public float calcular(){
+    Deque<Float> s = new ArrayDeque<Float>();
+    return calcularHelper(root, s);
+  }
+
+  private float calcularHelper(BTNode node, Deque s){
+
+    if(node == null){
+      return 0f;
+    }
+    float left = calcularHelper(node.getLeft());
+    float right = calcularHelper(node.getRight());
+
   }
 
   public boolean isEmpty() {
