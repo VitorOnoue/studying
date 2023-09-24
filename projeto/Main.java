@@ -4,35 +4,17 @@ Bruno Gustavo Rocha - 32215029
 Pedro Nogueira Ribeiro - 31842232
 Vitor Kenzo Koga Onoue - 32246315
 */
-/*
-.trim().replaceAll("\\s+", ""); = remove espaços no começo, meio e fim
-*/
 
-import java.util.ArrayDeque;
-import java.util.Deque;
+import java.util.Stack;
 import java.util.Scanner;
 
 public class Main {
   public static void main(String[] args) {
 
     Scanner s = new Scanner(System.in);
-    String str;
-    String infixa = "1.5+2*2";
+    String infixa = "", posfixa;
+    BinaryTree bt = null;
     boolean x = true;
-    BTNodeDor a = new BTNodeDor('+', null, null, null);
-    BTNodeDor b = new BTNodeDor('*', null, null, a);
-    a.setLeft(b);
-    BTNodeDor z = new BTNodeDor('*', null, null, a);
-    a.setRight(z);
-    BTNodeNdo left1 = new BTNodeNdo(3, b);
-    BTNodeNdo right1 = new BTNodeNdo(3, b);
-    BTNodeNdo left2 = new BTNodeNdo(4, z);
-    BTNodeNdo right2 = new BTNodeNdo(4, z);
-    b.setLeft(left1);
-    b.setRight(right1);
-    z.setLeft(left2);
-    z.setRight(right2);
-    BinaryTree bt = new BinaryTree(a);
     while (x) {
       System.out.println("\n\n\n Árvore binária de expressão aritmética");
       System.out.println("1. Entrada da expressão aritmética na notação infixa");
@@ -42,6 +24,7 @@ public class Main {
       System.out.println("5. Encerramento do programa");
 
       int escolha = s.nextInt();
+      s.nextLine();
 
       switch (escolha) {
         case 1:
@@ -60,9 +43,9 @@ public class Main {
         case 2:
           System.out.println("Criando árvore binária");
           // construir a arvore
-          str = converter(infixa);
-          System.out.println(str);
-          bt = new BinaryTree();
+          posfixa = converter(infixa);
+          System.out.println(posfixa);
+          bt = new BinaryTree(posfixa);
           break;
 
         case 3:
@@ -71,8 +54,7 @@ public class Main {
 
         case 4:
           System.out.println("Calculando sua expressão: ");
-          float ge = bt.result();
-          System.out.println(ge);
+          System.out.println(bt.result());
           break;
 
         case 5:
@@ -91,34 +73,36 @@ public class Main {
   public static boolean isValid(String str){
     int count = 0;
     if(str == ""){
+      System.out.println("Expressão vazia.");
       return false;
-    }
-    Deque<Character> s = new ArrayDeque<Character>();
+    };
+    Stack<Character> s = new Stack<Character>();
     if(isOp(str.charAt(0)) || isOp(str.charAt(str.length()-1))){
+      System.out.println("Operador binário com apenas um valor.");
       return false;
     }
     for(int i = 0; i < str.length(); i++){
       char x = str.charAt(i);
       if(x == '('){
         if(str.charAt(i+1) == ')'){
+          System.out.println("Parênteses sem conteúdo.");
           return false;
         }
         s.push(x);
       }
       else if(x == ')'){
         if(!s.isEmpty()){
-          char y = s.pop();
-          if(y != '('){
-            return false;
-          }
+          s.pop();
         }
         else{
+          System.out.println("Parênteses em ordem contrária, ou parênteses direito sem esquerdo.");
           return false;
         }
       }
       else if(isOp(x)){
         count++;
         if(isOp(str.charAt(i-1))){
+          System.out.println("Dois operadores seguidos.");
           return false;
         }
       }
@@ -126,17 +110,23 @@ public class Main {
         continue;
       }
       else{
+        System.out.println("Caracter inválido.");
         return false;
       }
     }
-    if(!s.isEmpty() || count == 0){
+    if(!s.isEmpty()){
+      System.out.println("Parênteses sem fechar.");
+      return false;
+    }
+    if(count == 0){
+      System.out.println("Sem operadores.");
       return false;
     }
     return true;
   }
 
   public static String converter(String str) {
-    Deque<Character> s = new ArrayDeque<Character>();
+    Stack<Character> s = new Stack<Character>();
     String rpn = "";
     for (int i = 0; i < str.length(); i++) {
       char x = str.charAt(i);
@@ -194,8 +184,6 @@ public class Main {
     if (x == '+' || x == '-' || x == '*' || x == '/' || x == '–'){
       return true;
     }
-    else{
-      return false;
-    }
+    return false;
   }
 }

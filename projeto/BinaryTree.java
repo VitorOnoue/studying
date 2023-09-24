@@ -16,21 +16,43 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-// imports para a fila usada na levelOrderTraversalHelper(). 
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.Stack;
 
 
 public class BinaryTree {
 
   private BTNode root;
 
-  public BinaryTree() {
-    this(null);
-  }
-
   public BinaryTree(BTNode root) {
     this.root = root;
+  }
+
+  public BinaryTree(String rpn) {
+    String split[] = rpn.split("\\s+");
+    Stack<BTNode> s = new Stack<BTNode>();
+    for(int i = 0; i < split.length; i++){
+      if(isOp(split[i])){
+        BTNode right = s.pop();
+        BTNode left = s.pop();
+        BTNodeDor op = new BTNodeDor(split[i].charAt(0), left, right, null);
+        right.setParent(op);
+        left.setParent(op);
+        s.push(op);
+      }
+      else{
+        BTNodeNdo n = new BTNodeNdo(Float.parseFloat(split[i]), null);
+        s.push(n);
+      }
+    }
+    root = s.pop();
+  }
+
+
+  public boolean isOp(String x){
+    if(x.equals("+") || x.equals("-") || x.equals("/") || x.equals("*")){
+      return true;
+    }
+    return false;
   }
 
   public float result(){
@@ -42,29 +64,5 @@ public class BinaryTree {
 
   public boolean isEmpty() {
     return root == null;
-  }
-
-  public String postOrderTraversal() {
-    return postOrderTraversalHelper(root);
-}
-
-  private String postOrderTraversalHelper(BTNode node) {
-    if (node == null) {
-      return "";
-    }
-
-    StringBuilder sb = new StringBuilder();
-
-    if (node instanceof BTNodeDor) {
-      BTNodeDor operatorNode = (BTNodeDor) node;
-      sb.append(postOrderTraversalHelper(operatorNode.getLeft()));
-      sb.append(postOrderTraversalHelper(operatorNode.getRight()));
-      sb.append(operatorNode.getValue() + " ");
-    } else if (node instanceof BTNodeNdo) {
-      BTNodeNdo operandNode = (BTNodeNdo) node;
-      sb.append(operandNode.getValue() + " ");
-    }
-
-    return sb.toString();
   }
 }
