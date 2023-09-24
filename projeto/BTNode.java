@@ -17,38 +17,9 @@
 //
 
 public class BTNode {
-
-	private String data;
 	private BTNode parent;
 	private BTNode left;
-	private BTNode right;
-
-	public BTNode() {
-		this("", null);
-	}
-
-	public BTNode(String data) {
-		this(data, null);
-	}
-
-	public BTNode(String data, BTNode parent) {
-		this.data = data;
-		this.parent = parent;
-		this.left = null;
-		this.right = null;
-	}
-
-  public float visitar(){
-    return 2f;
-  }
-
-	public String getData() {
-		return data;
-	}
-
-	public void setData(String data) {
-		this.data = data;
-	}
+  	private BTNode right;
 
 	public BTNode getParent() {
 		return parent;
@@ -64,7 +35,6 @@ public class BTNode {
 
 	public void setLeft(BTNode left) {
 		this.left = left;
-		left.setParent(this);
 	}
 
 	public BTNode getRight() {
@@ -73,66 +43,9 @@ public class BTNode {
 
 	public void setRight(BTNode right) {
 		this.right = right;
-		right.setParent(this);
 	}
 
-	public boolean hasLeftChild() {
-		return left != null;
-	}
-
-	public boolean hasRightChild() {
-		return right != null;
-	}
-
-	public boolean isRoot() {
-		return parent == null;
-	}
-
-	public boolean isLeaf() {
-		return left == null && right == null;
-	}
-
-	public int getDegree() {
-		int degree = 0;
-		if (hasLeftChild())
-			++degree;
-		if (hasRightChild())
-			++degree;
-		return degree;
-	}
-
-	public int getLevel() {
-		if (isRoot()) {
-			return 0;
-		}
-
-		return parent.getLevel() + 1;
-	}
-
-	public int getHeight() {
-		if (isLeaf()) {
-			return 0;
-		}
-
-		int height = 0;
-		if (hasLeftChild())
-			height = Math.max(height, left.getHeight());
-		if (hasRightChild())
-			height = Math.max(height, right.getHeight());
-		return height + 1;
-	}
-
-	@Override
-	public String toString() {
-		return "data: " + data
-				+ ", parent: " + (parent != null ? parent.getData() : "null")
-				+ ", left: " + (left != null ? left.getData() : "null")
-				+ ", right: " + (right != null ? right.getData() : "null")
-				+ ", isRoot(): " + isRoot()
-				+ ", isLeaf(): " + isLeaf()
-				+ ", getDegree(): " + getDegree()
-				+ ", getLevel(): " + getLevel()
-				+ ", getHeight(): " + getHeight();
-	}
-
+	public float visitar(){
+		return Float.NaN;
+	}	
 }

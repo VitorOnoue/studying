@@ -19,7 +19,7 @@
 // imports para a fila usada na levelOrderTraversalHelper(). 
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.Deque;
+
 
 public class BinaryTree {
 
@@ -33,89 +33,20 @@ public class BinaryTree {
     this.root = root;
   }
 
-  public float calcular(){
-    Deque<Float> s = new ArrayDeque<Float>();
-    return calcularHelper(root, s);
-  }
-
-  private float calcularHelper(BTNode node, Deque s){
-
-    if(node == null){
-      return 0f;
+  public float result(){
+    if(root == null){
+      throw new IllegalStateException("empty tree");
     }
-    float left = calcularHelper(node.getLeft());
-    float right = calcularHelper(node.getRight());
-
+    return root.visitar();
   }
 
   public boolean isEmpty() {
     return root == null;
   }
 
-  public int getDegree() {
-    return getDegreeHelper(root);
-  }
-
-  private int getDegreeHelper(BTNode node) {
-    if (node == null || node.isLeaf()) {
-      return 0;
-    }
-
-    int degree = node.getDegree();
-    if (node.hasLeftChild())
-      degree = Math.max(degree, getDegreeHelper(node.getLeft()));
-    if (node.hasRightChild())
-      degree = Math.max(degree, getDegreeHelper(node.getRight()));
-    return degree;
-  }
-
-  public int getHeight() {
-    if (isEmpty()) {
-      return -1;
-    }
-
-    return root.getHeight();
-  }
-
-  public String inOrderTraversal() {
-    return inOrderTraversalHelper(root);
-  }
-
-  private String inOrderTraversalHelper(BTNode node) {
-    if (node == null) {
-      return "";
-    }
-
-    StringBuilder sb = new StringBuilder();
-
-    sb.append(inOrderTraversalHelper(node.getLeft()));
-    sb.append(node.getData() + " ");
-    sb.append(inOrderTraversalHelper(node.getRight()));
-
-    return sb.toString();
-  }
-
-  public String preOrderTraversal() {
-    return preOrderTraversalHelper(root);
-  }
-
-  private String preOrderTraversalHelper(BTNode node) {
-    if (node == null) {
-      return "";
-    }
-
-    StringBuilder sb = new StringBuilder();
-
-    sb.append(node.getData() + " ");
-    sb.append(preOrderTraversalHelper(node.getLeft()));
-    sb.append(preOrderTraversalHelper(node.getRight()));
-
-    return sb.toString();
-  }
-
   public String postOrderTraversal() {
     return postOrderTraversalHelper(root);
-  }
+}
 
   private String postOrderTraversalHelper(BTNode node) {
     if (node == null) {
@@ -124,48 +55,16 @@ public class BinaryTree {
 
     StringBuilder sb = new StringBuilder();
 
-    sb.append(postOrderTraversalHelper(node.getLeft()));
-    sb.append(postOrderTraversalHelper(node.getRight()));
-    sb.append(node.getData() + " ");
-
-    return sb.toString();
-  }
-
-  public String levelOrderTraversal() {
-    return levelOrderTraversalHelper(root);
-  }
-
-  private String levelOrderTraversalHelper(BTNode node) {
-    if (node == null) {
-      return "";
-    }
-
-    StringBuilder sb = new StringBuilder();
-
-    Queue<BTNode> queue = new LinkedList<>();
-    queue.add(node);
-
-    while (!queue.isEmpty()) {
-      BTNode visited = queue.remove();
-      sb.append(visited.getData() + " ");
-
-      if (visited.hasLeftChild()) {
-        queue.add(visited.getLeft());
-      }
-      if (visited.hasRightChild()) {
-        queue.add(visited.getRight());
-      }
+    if (node instanceof BTNodeDor) {
+      BTNodeDor operatorNode = (BTNodeDor) node;
+      sb.append(postOrderTraversalHelper(operatorNode.getLeft()));
+      sb.append(postOrderTraversalHelper(operatorNode.getRight()));
+      sb.append(operatorNode.getValue() + " ");
+    } else if (node instanceof BTNodeNdo) {
+      BTNodeNdo operandNode = (BTNodeNdo) node;
+      sb.append(operandNode.getValue() + " ");
     }
 
     return sb.toString();
   }
-
-  @Override
-  public String toString() {
-    return "BinaryTree - isEmpty(): " + isEmpty()
-        + ", getDegree(): " + getDegree()
-        + ", getHeight(): " + getHeight()
-        + ", root => { " + root + " }";
-  }
-
 }
