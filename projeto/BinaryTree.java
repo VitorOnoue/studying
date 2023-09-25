@@ -34,9 +34,7 @@ public class BinaryTree {
       if(isOp(split[i])){
         BTNode right = s.pop();
         BTNode left = s.pop();
-        BTNodeDor op = new BTNodeDor(split[i].charAt(0), left, right, null);
-        right.setParent(op);
-        left.setParent(op);
+        BTNodeDor op = new BTNodeDor(split[i].charAt(0), left, right);
         s.push(op);
       }
       else{
@@ -46,7 +44,6 @@ public class BinaryTree {
     }
     root = s.pop();
   }
-
 
   public boolean isOp(String x){
     if(x.equals("+") || x.equals("-") || x.equals("/") || x.equals("*")){
@@ -65,4 +62,77 @@ public class BinaryTree {
   public boolean isEmpty() {
     return root == null;
   }
+
+  public String inOrderTraversal() {
+    return inOrderTraversalHelper(root);
+  }
+
+  private String inOrderTraversalHelper(BTNode node) {
+    if(node == null){
+      return "";
+    }
+    StringBuilder sb = new StringBuilder();
+    if(node instanceof BTNodeDor){
+      BTNodeDor op = (BTNodeDor) node;
+      sb.append(inOrderTraversalHelper(op.getLeft()));
+      sb.append(op.getValue() + " ");
+      sb.append(inOrderTraversalHelper(op.getRight()));
+    }
+    else if(node instanceof BTNodeNdo){
+      BTNodeNdo n = (BTNodeNdo) node;
+      sb.append(inOrderTraversalHelper(n.getLeft()));
+      sb.append(n.getValue() + " ");
+      sb.append(inOrderTraversalHelper(n.getRight()));
+    }
+    return sb.toString();
+  }
+
+	public String preOrderTraversal() {
+		return preOrderTraversalHelper(root);
+	}
+
+	private String preOrderTraversalHelper(BTNode node) {
+		if (node == null){
+			return "";
+		}
+
+		StringBuilder sb = new StringBuilder();
+		if(node instanceof BTNodeDor){
+      BTNodeDor op = (BTNodeDor) node;
+      sb.append(op.getValue() + " ");
+		  sb.append(preOrderTraversalHelper(op.getLeft()));
+		  sb.append(preOrderTraversalHelper(op.getRight()));
+    }
+    else if(node instanceof BTNodeNdo){
+      BTNodeNdo n = (BTNodeNdo) node;
+      sb.append(n.getValue() + " ");
+		  sb.append(preOrderTraversalHelper(n.getLeft()));
+		  sb.append(preOrderTraversalHelper(n.getRight()));
+    }
+		return sb.toString();
+	}
+
+	public String postOrderTraversal() {
+		return postOrderTraversalHelper(root);
+	}
+
+	private String postOrderTraversalHelper(BTNode node) {
+		if (node == null) {
+			return "";
+		}
+		StringBuilder sb = new StringBuilder();
+    if(node instanceof BTNodeDor){
+      BTNodeDor op = (BTNodeDor) node;
+      sb.append(postOrderTraversalHelper(op.getLeft()));
+		  sb.append(postOrderTraversalHelper(op.getRight()));
+		  sb.append(op.getValue() + " ");
+    }
+    else if(node instanceof BTNodeNdo){
+      BTNodeNdo n = (BTNodeNdo) node;
+      sb.append(postOrderTraversalHelper(n.getLeft()));
+		  sb.append(postOrderTraversalHelper(n.getRight()));
+		  sb.append(n.getValue() + " ");
+    }
+		return sb.toString();
+	}
 }

@@ -17,17 +17,8 @@
 //
 
 public class BTNode {
-	private BTNode parent;
 	private BTNode left;
   	private BTNode right;
-
-	public BTNode getParent() {
-		return parent;
-	}
-
-	public void setParent(BTNode parent) {
-		this.parent = parent;
-	}
 
 	public BTNode getLeft() {
 		return left;
@@ -47,5 +38,5 @@ public class BTNode {
 
 	public float visitar(){
 		return Float.NaN;
-	}	
+	}
 }

@@ -2,21 +2,11 @@ public class BTNodeDor extends BTNode {
   private char value;
   private BTNode left;
   private BTNode right;
-  private BTNode parent;
 
-  public BTNodeDor(char value, BTNode left, BTNode right, BTNode parent){
+  public BTNodeDor(char value, BTNode left, BTNode right){
     this.value = value;
     this.left = left;
     this.right = right;
-    this.parent = parent;
-  }
-  
-  public BTNode getParent() {
-    return parent;
-  }
-
-  public void setParent(BTNode parent) {
-    this.parent = parent;
   }
 
   public BTNode getLeft() {

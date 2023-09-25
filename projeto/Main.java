@@ -50,6 +50,9 @@ public class Main {
 
         case 3:
           System.out.println("Exibindo a árvore binária");
+          System.out.println(bt.inOrderTraversal());
+          System.out.println(bt.preOrderTraversal());
+          System.out.println(bt.postOrderTraversal());
           break;
 
         case 4:
