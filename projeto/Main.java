@@ -75,14 +75,16 @@ public class Main {
 
   public static boolean isValid(String str){
     int count = 0;
-    if(str == ""){
+    if(str.equals("")){
       System.out.println("Expressão vazia.");
       return false;
     };
     Stack<Character> s = new Stack<Character>();
     if(isOp(str.charAt(0)) || isOp(str.charAt(str.length()-1))){
-      System.out.println("Operador binário com apenas um valor.");
-      return false;
+      if(str.charAt(0) != '-'){
+        System.out.println("Operador binário com apenas um valor.");
+        return false;
+      }
     }
     for(int i = 0; i < str.length(); i++){
       char x = str.charAt(i);
@@ -103,10 +105,12 @@ public class Main {
         }
       }
       else if(isOp(x)){
-        count++;
-        if(isOp(str.charAt(i-1))){
-          System.out.println("Dois operadores seguidos.");
-          return false;
+        if(i != 0 && str.charAt(i) != '-'){
+          count++;
+          if(isOp(str.charAt(i-1))){
+            System.out.println("Dois operadores seguidos.");
+            return false;
+          }
         }
       }
       else if(Character.isDigit(x) || x == '.'){
@@ -133,9 +137,9 @@ public class Main {
     String rpn = "";
     for (int i = 0; i < str.length(); i++) {
       char x = str.charAt(i);
-      if (Character.isDigit(x)) {
+      if (Character.isDigit(x) || (i == 0 && x == '-')) {
         StringBuilder number = new StringBuilder();
-        while (i < str.length() && (Character.isDigit(str.charAt(i)) || str.charAt(i) == '.')) {
+        while (i < str.length() && (Character.isDigit(str.charAt(i)) || str.charAt(i) == '.' || (i == 0 && x == '-'))) {
           number.append(str.charAt(i));
           i++;
         }
