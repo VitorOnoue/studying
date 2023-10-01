@@ -2,31 +2,43 @@
 #include <stdlib.h>
 #include <string.h>
 
-void g3x(float p1, float p2, int* array){
-
+void pendrives(int size, int inside, int amount, int arqs[], int i, int n){
+  if(i == n || inside >= size){
+    
+  }
+  if(arqs[i] + inside <= size){
+    
+  }
+  pendrives(size, inside, amount, arqs, i + 1, n);
 }
 
-int main(){
-    FILE *f;
-    int max = 20;
-    f = fopen("backup.in.txt", "r");
-    char x[max];
-    fgets(x, max, f);
-    for(int i = 0; i < atoi(x); i++){
-        char y[max];
-        printf("%s", y);
-        fgets(y, max, f);
-        char* token1 = strtok(y, " ");
-        char* token2 = strtok(NULL, " ");
-        float p1 = atoi(token1)/2;
-        float p2 = p1;
-        int array[max];
-        for(int j = 0; j < atoi(token2);j++){
-            int z = atoi(fgets(y, max, f));
-            array[j] = z;
-        }
-
+int main() {
+  FILE *f; // file
+  int max = 20;
+  f = fopen("backup.in.txt", "r"); // abre arquivo read
+  char row1[max]; // linha 1 (testes)
+  fgets(row1, max, f); // pega linha 1
+  printf("%d\n", atoi(row1));
+  
+  for (int i = 0; i < atoi(row1); i++) { // atoi = transforma em int
+    char row2[max]; // linha 2 (tamanho do backup, quantidade de arquivos)
+    fgets(row2, max, f); // pega linha 2
+    printf("%s", row2);
+    char *token1 = strtok(row2, " "); // strtok splita a string no delimiter
+    char *token2 = strtok(NULL, " "); // deixando null ap-os a primeira vez, ele procede na mesma string
+    int pens = atoi(token1) / 2; // tamanho pendrives
+    int amount = atoi(token2); // quantidade de arquivos
+    
+    int arqs[amount]; // arquivos
+    
+    for (int j = 0; j < amount; j++) {
+      fgets(row2, max, f); // pega os valores dos arquivos
+      int x = atoi(row2);
+      arqs[j] = x;
     }
-    fclose(f);
-    return 0;
+    pendrives(pens, amount, arqs, 0);
+  }
+  
+  fclose(f);
+  return 0;
 }

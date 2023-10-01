@@ -80,9 +80,7 @@ public class BinaryTree {
     }
     else if(node instanceof BTNodeNdo){
       BTNodeNdo n = (BTNodeNdo) node;
-      sb.append(inOrderTraversalHelper(n.getLeft()));
       sb.append(n.getValue() + " ");
-      sb.append(inOrderTraversalHelper(n.getRight()));
     }
     return sb.toString();
   }
@@ -106,8 +104,6 @@ public class BinaryTree {
     else if(node instanceof BTNodeNdo){
       BTNodeNdo n = (BTNodeNdo) node;
       sb.append(n.getValue() + " ");
-		  sb.append(preOrderTraversalHelper(n.getLeft()));
-		  sb.append(preOrderTraversalHelper(n.getRight()));
     }
 		return sb.toString();
 	}
@@ -129,8 +125,6 @@ public class BinaryTree {
     }
     else if(node instanceof BTNodeNdo){
       BTNodeNdo n = (BTNodeNdo) node;
-      sb.append(postOrderTraversalHelper(n.getLeft()));
-		  sb.append(postOrderTraversalHelper(n.getRight()));
 		  sb.append(n.getValue() + " ");
     }
 		return sb.toString();
