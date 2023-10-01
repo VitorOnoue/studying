@@ -8,23 +8,27 @@ int segunda[10]; // combinacao do segundo pendrive
 int pendrive;    // tamanho pendrives
 
 void combinacao(int size, int qtd, int arqs[], int comb[], int i, int j) {
-  if (j == qtd || size <= 0) { // se acabou os itens ou mochila cheia
+  if (j == qtd || size <= 0) { // se acabou os itens ou pendrive cheio
     int espaco = 0;            // espaco ocupado pela combinacao
     for (int k = 0; k < i; k++) {
       espaco += comb[k]; // aumenta com os itens
     }
-    if (espaco > maior && espaco <= pendrive) { // se o espaco novo for o maior, se torna o "novo" maior
+    if (espaco > maior &&
+        espaco <=
+            pendrive) { // se o espaco novo for o maior, se torna o "novo" maior
       maior = espaco;
       for (int k = 0; k < i; k++) {
         melhor[k] = comb[k]; // a nova combinacao se torna a "nova" melhor
       }
     }
     return;
-  } else if (arqs[j] <= size) { // ver se item menor que mochila
-    comb[i] = arqs[j];          // coloca na mochila
-    combinacao(size - arqs[j], qtd, arqs, comb, i + 1, j + 1); // chama a funcao de novo, vendo o proximo item
+  } else if (arqs[j] <= size) { // ver se item menor que pendrive
+    comb[i] = arqs[j];          // coloca na pendrive
+    combinacao(size - arqs[j], qtd, arqs, comb, i + 1,
+               j + 1); // chama a funcao de novo, vendo o proximo item
   }
-  combinacao(size, qtd, arqs, comb, i, j + 1); // chama a funcao de novo, vendo o proximo item
+  combinacao(size, qtd, arqs, comb, i,
+             j + 1); // chama a funcao de novo, vendo o proximo item
 }
 
 int main() {
@@ -38,7 +42,9 @@ int main() {
     char row2[max];      // linha 2 (tamanho do backup, quantidade de arquivos)
     fgets(row2, max, f); // pega linha 2
     char *token1 = strtok(row2, " "); // strtok splita a string no delimiter
-    char *token2 = strtok(NULL, " "); // deixando null apos a primeira vez, ele procede na mesma string
+    char *token2 = strtok(
+        NULL,
+        " "); // deixando null apos a primeira vez, ele procede na mesma string
     printf("\n%d GB\n", atoi(token1));
 
     pendrive = atoi(token1) / 2; // tamanho combinacao
@@ -67,7 +73,7 @@ int main() {
       }
     }
     if (soma > pendrive) { // se os arquivos sao maiores que o pendrive
-      printf("\nImpossível gravar todos os arquivos nos combinacao.\n");
+      printf("\nImpossível gravar todos os arquivos nos pendrives.\n");
     } else { // senao, printar os dois pendrives
       printf("Pendrive A (%d GB): \n", pendrive);
       for (int i = 0; i < 10; i++) {
