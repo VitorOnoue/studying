@@ -79,8 +79,11 @@ public class AVL extends BST {
         setNElem(getNElem() + 1);
     }
 
-    private BTNode insereNoAVL(BTNode noAtual, String data) {
+    private BTNode insereNoAVL(BTNode noAtual, Estoque data) {
         if (noAtual != null) {
+            if (noAtual.getData().getCodigoProduto() == data.getCodigoProduto()) {
+                return noAtual;
+            }
             if (noAtual.getData().getCodigoProduto() > data.getCodigoProduto()) {
                 noAtual.setLeft(insereNoAVL(noAtual.getLeft(), data));
                 noAtual.getLeft().setParent(noAtual);

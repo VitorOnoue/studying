@@ -67,8 +67,9 @@ public class BST extends BinaryTree {
         return node;
     }
 
-    public void remove(int id) {
+    public boolean remove(int id) {
         super.setRoot(removeHelper(super.getRoot(), id));
+        return true;
     }
 
     private BTNode removeHelper(BTNode node, int id) {

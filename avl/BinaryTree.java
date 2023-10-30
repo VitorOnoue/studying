@@ -81,7 +81,8 @@ public class BinaryTree {
         StringBuilder sb = new StringBuilder();
 
         sb.append(inOrderTraversalHelper(node.getLeft()));
-        sb.append(node.getData().getCodigoProduto() + " - " + node.getData().getNome());
+        Estoque x = node.getData();
+        sb.append("Id: " + x.getCodigoProduto() + " - nome: " + x.getNome() + " - quantidade: " + x.getQtde() + " - valor unitário: " + x.getValorUnitario() + "\n");
         sb.append(inOrderTraversalHelper(node.getRight()));
 
         return sb.toString();
@@ -98,7 +99,8 @@ public class BinaryTree {
 
         StringBuilder sb = new StringBuilder();
 
-        sb.append(node.getData().getCodigoProduto() + " - " + node.getData().getNome());
+        Estoque x = node.getData();
+        sb.append("Id: " + x.getCodigoProduto() + " - nome: " + x.getNome() + " - quantidade: " + x.getQtde() + " - valor unitário: " + x.getValorUnitario() + "\n");
         sb.append(preOrderTraversalHelper(node.getLeft()));
         sb.append(preOrderTraversalHelper(node.getRight()));
 
@@ -118,7 +120,8 @@ public class BinaryTree {
 
         sb.append(postOrderTraversalHelper(node.getLeft()));
         sb.append(postOrderTraversalHelper(node.getRight()));
-        sb.append(node.getData().getCodigoProduto() + " - " + node.getData().getNome());
+        Estoque x = node.getData();
+        sb.append("Id: " + x.getCodigoProduto() + " - nome: " + x.getNome() + " - quantidade: " + x.getQtde() + " - valor unitário: " + x.getValorUnitario() + "\n");
 
         return sb.toString();
     }
@@ -139,7 +142,8 @@ public class BinaryTree {
 
         while (!queue.isEmpty()) {
             BTNode visited = queue.remove();
-            sb.append(visited.getData().getCodigoProduto() + " - " + visited.getData().getNome());
+            Estoque x = visited.getData();
+            sb.append("Id: " + x.getCodigoProduto() + " - nome: " + x.getNome() + " - quantidade: " + x.getQtde() + " - valor unitário: " + x.getValorUnitario() + "\n");
 
             if (visited.hasLeftChild()) {
                 queue.add(visited.getLeft());
@@ -170,6 +174,4 @@ public class BinaryTree {
                 + ", getHeight(): " + getHeight()
                 + ", root => { " + root + " }";
     }
-
 }
-
