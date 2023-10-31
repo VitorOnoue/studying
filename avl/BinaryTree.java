@@ -82,9 +82,49 @@ public class BinaryTree {
 
         sb.append(inOrderTraversalHelper(node.getLeft()));
         Estoque x = node.getData();
-        sb.append("Id: " + x.getCodigoProduto() + " - nome: " + x.getNome() + " - quantidade: " + x.getQtde() + " - valor unitário: " + x.getValorUnitario() + "\n");
+        sb.append("Id: " + x.getCodigoProduto() + " - nome: " + x.getNome() + " - quantidade: " + x.getQtde()
+                + " - valor unitário: " + x.getValorUnitario() + "\n");
         sb.append(inOrderTraversalHelper(node.getRight()));
 
+        return sb.toString();
+    }
+
+    public float calculaEstoqueTotal() {
+        return calculaEstoqueTotalHelper(root);
+    }
+
+    private float calculaEstoqueTotalHelper(BTNode node) {
+        if (node == null) {
+            return 0;
+        }
+
+        float totalEstoque = 0;
+        totalEstoque += calculaEstoqueTotalHelper(node.getLeft());
+        Estoque x = node.getData();
+        totalEstoque += x.getQtde() * x.getValorUnitario();
+        totalEstoque += calculaEstoqueTotalHelper(node.getRight());
+
+        return totalEstoque;
+    }
+
+    public String mostraProdutosMenoresQue(float valor) {
+        return mostraProdutosMenoresQueHelper(root, valor);
+    }
+
+    private String mostraProdutosMenoresQueHelper(BTNode node, float valor) {
+        if (node == null) {
+            return "";
+        }
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(mostraProdutosMenoresQueHelper(node.getLeft(), valor));
+        Estoque x = node.getData();
+        float valorProduto = x.getValorUnitario();
+        if (valorProduto < valor) {
+            sb.append("Id: " + x.getCodigoProduto() + " - nome: " + x.getNome() + " - quantidade: " + x.getQtde()
+                    + " - estoque (R$): " + valorProduto + "\n");
+        }
+        sb.append(mostraProdutosMenoresQueHelper(node.getRight(), valor));
         return sb.toString();
     }
 
@@ -100,7 +140,8 @@ public class BinaryTree {
         StringBuilder sb = new StringBuilder();
 
         Estoque x = node.getData();
-        sb.append("Id: " + x.getCodigoProduto() + " - nome: " + x.getNome() + " - quantidade: " + x.getQtde() + " - valor unitário: " + x.getValorUnitario() + "\n");
+        sb.append("Id: " + x.getCodigoProduto() + " - nome: " + x.getNome() + " - quantidade: " + x.getQtde()
+                + " - valor unitário: " + x.getValorUnitario() + "\n");
         sb.append(preOrderTraversalHelper(node.getLeft()));
         sb.append(preOrderTraversalHelper(node.getRight()));
 
@@ -121,7 +162,8 @@ public class BinaryTree {
         sb.append(postOrderTraversalHelper(node.getLeft()));
         sb.append(postOrderTraversalHelper(node.getRight()));
         Estoque x = node.getData();
-        sb.append("Id: " + x.getCodigoProduto() + " - nome: " + x.getNome() + " - quantidade: " + x.getQtde() + " - valor unitário: " + x.getValorUnitario() + "\n");
+        sb.append("Id: " + x.getCodigoProduto() + " - nome: " + x.getNome() + " - quantidade: " + x.getQtde()
+                + " - valor unitário: " + x.getValorUnitario() + "\n");
 
         return sb.toString();
     }
@@ -143,7 +185,8 @@ public class BinaryTree {
         while (!queue.isEmpty()) {
             BTNode visited = queue.remove();
             Estoque x = visited.getData();
-            sb.append("Id: " + x.getCodigoProduto() + " - nome: " + x.getNome() + " - quantidade: " + x.getQtde() + " - valor unitário: " + x.getValorUnitario() + "\n");
+            sb.append("Id: " + x.getCodigoProduto() + " - nome: " + x.getNome() + " - quantidade: " + x.getQtde()
+                    + " - valor unitário: " + x.getValorUnitario() + "\n");
 
             if (visited.hasLeftChild()) {
                 queue.add(visited.getLeft());

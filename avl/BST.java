@@ -45,6 +45,30 @@ public class BST extends BinaryTree {
         }
     }
 
+    public BTNode searchByName(String nome) {
+        return searchByNameHelper(super.getRoot(), nome);
+    }
+
+    private BTNode searchByNameHelper(BTNode node, String nome) {
+        if (node == null) {
+            return null;
+        }
+        boolean equals = node.getData().getNome().equals(nome);
+        if (equals) {
+            return node;
+        } else {
+            BTNode left = searchByNameHelper(node.getLeft(), nome);
+            BTNode right = searchByNameHelper(node.getRight(), nome);
+            if (left != null) {
+                return left;
+            }
+            if (right != null) {
+                return right;
+            }
+            return null;
+        }
+    }
+
     public void insert(Estoque data) {
         super.setRoot(insertHelper(super.getRoot(), null, data));
     }
