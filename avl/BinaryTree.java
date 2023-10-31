@@ -119,10 +119,10 @@ public class BinaryTree {
 
         sb.append(mostraProdutosMenoresQueHelper(node.getLeft(), valor));
         Estoque x = node.getData();
-        float valorProduto = x.getValorUnitario();
+        float valorProduto = x.getQtde();
         if (valorProduto < valor) {
             sb.append("Id: " + x.getCodigoProduto() + " - nome: " + x.getNome() + " - quantidade: " + x.getQtde()
-                    + " - estoque (R$): " + valorProduto + "\n");
+                    + " - estoque (R$): " + x.getQtde() * x.getValorUnitario() + "\n");
         }
         sb.append(mostraProdutosMenoresQueHelper(node.getRight(), valor));
         return sb.toString();
