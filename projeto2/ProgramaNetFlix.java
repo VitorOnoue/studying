@@ -1,5 +1,4 @@
 public class ProgramaNetFlix {
-    // data attributes
     private String id;
     private String titulo;
     private String show_type;
@@ -15,12 +14,10 @@ public class ProgramaNetFlix {
     private Float imdb_votes;
     private Float tmdb_popularity;
     private Float tmdb_score;
-    // tree structure attributes
-    private ProgramaNetFlix parent;
-    private ProgramaNetFlix left;
-    private ProgramaNetFlix right;
-    private int fb;
 
+    public ProgramaNetFlix() {
+    }
+    
     public ProgramaNetFlix(String id, String titulo, String show_type, String descricao, int release_year,
             String age_certification, int runtime, String[] generos, String[] production_countries, Float temporadas,
             String imdb_id, Float imdb_score, Float imdb_votes, Float tmdb_popularity, Float tmdb_score) {
@@ -41,204 +38,94 @@ public class ProgramaNetFlix {
         this.tmdb_score = tmdb_score;
     }
 
-    public boolean hasLeftChild() {
-        return left != null;
-    }
-
-    public boolean hasRightChild() {
-        return right != null;
-    }
-
-    public boolean isRoot() {
-        return parent == null;
-    }
-
-    public boolean isLeaf() {
-        return left == null && right == null;
-    }
-
-    public int getDegree() {
-        int degree = 0;
-
-        if (hasLeftChild()) {
-            ++degree;
-        }
-
-        if (hasRightChild()) {
-            ++degree;
-        }
-
-        return degree;
-    }
-
-    public int getHeight() {
-        if (isLeaf()) {
-            return 0;
-        }
-
-        int height = 0;
-
-        if (hasLeftChild()) {
-            height = Math.max(height, left.getHeight());
-        }
-
-        if (hasRightChild()) {
-            height = Math.max(height, right.getHeight());
-        }
-
-        return height + 1;
-    }
-
     public String getId() {
         return id;
     }
-
     public void setId(String id) {
         this.id = id;
     }
-
     public String getTitulo() {
         return titulo;
     }
-
     public void setTitulo(String titulo) {
         this.titulo = titulo;
     }
-
     public String getShow_type() {
         return show_type;
     }
-
     public void setShow_type(String show_type) {
         this.show_type = show_type;
     }
-
     public String getDescricao() {
         return descricao;
     }
-
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
-
     public int getRelease_year() {
         return release_year;
     }
-
     public void setRelease_year(int release_year) {
         this.release_year = release_year;
     }
-
     public String getAge_certification() {
         return age_certification;
     }
-
     public void setAge_certification(String age_certification) {
         this.age_certification = age_certification;
     }
-
     public int getRuntime() {
         return runtime;
     }
-
     public void setRuntime(int runtime) {
         this.runtime = runtime;
     }
-
     public String[] getGeneros() {
         return generos;
     }
-
     public void setGeneros(String[] generos) {
         this.generos = generos;
     }
-
     public String[] getProduction_countries() {
         return production_countries;
     }
-
     public void setProduction_countries(String[] production_countries) {
         this.production_countries = production_countries;
     }
-
     public Float getTemporadas() {
         return temporadas;
     }
-
     public void setTemporadas(Float temporadas) {
         this.temporadas = temporadas;
     }
-
     public String getImdb_id() {
         return imdb_id;
     }
-
     public void setImdb_id(String imdb_id) {
         this.imdb_id = imdb_id;
     }
-
     public Float getImdb_score() {
         return imdb_score;
     }
-
     public void setImdb_score(Float imdb_score) {
         this.imdb_score = imdb_score;
     }
-
     public Float getImdb_votes() {
         return imdb_votes;
     }
-
     public void setImdb_votes(Float imdb_votes) {
         this.imdb_votes = imdb_votes;
     }
-
     public Float getTmdb_popularity() {
         return tmdb_popularity;
     }
-
     public void setTmdb_popularity(Float tmdb_popularity) {
         this.tmdb_popularity = tmdb_popularity;
     }
-
     public Float getTmdb_score() {
         return tmdb_score;
     }
-
     public void setTmdb_score(Float tmdb_score) {
         this.tmdb_score = tmdb_score;
-    }
-
-    public ProgramaNetFlix getParent() {
-        return parent;
-    }
-
-    public void setParent(ProgramaNetFlix parent) {
-        this.parent = parent;
-    }
-
-    public ProgramaNetFlix getLeft() {
-        return left;
-    }
-
-    public void setLeft(ProgramaNetFlix left) {
-        this.left = left;
-    }
-
-    public ProgramaNetFlix getRight() {
-        return right;
-    }
-
-    public void setRight(ProgramaNetFlix right) {
-        this.right = right;
-    }
-
-    public int getFb() {
-        return fb;
-    }
-
-    public void setFb(int fb) {
-        this.fb = fb;
-    }
-
+    }    
 }
