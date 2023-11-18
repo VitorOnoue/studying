@@ -73,9 +73,9 @@ public class AVL extends BST {
 
     private boolean flagInsercao;
 
-    public void insert(ProgramaNetFlix data) {
+    public void insert(Node node) {
         flagInsercao = false;
-        setRoot(insereNoAVL(getRoot(), data));
+        setRoot(insereNoAVL(getRoot(), node.getData()));
         setNElem(getNElem() + 1);
     }
 
@@ -161,7 +161,7 @@ public class AVL extends BST {
                 }
             }
         } else {
-            noAtual = new Node(data, 0, null, null, null); // CRIAR NODE
+            noAtual = new Node(data, null, null, null, 0); // CRIAR NODE
             flagInsercao = true;
         }
         return (noAtual);

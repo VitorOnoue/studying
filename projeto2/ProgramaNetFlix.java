@@ -1,4 +1,11 @@
+import java.util.regex.Pattern;
+
 public class ProgramaNetFlix {
+    // regex
+    String left = Pattern.quote("[");
+    String right = Pattern.quote("]");
+    String squote = Pattern.quote("'");
+    
     private String id;
     private String titulo;
     private String show_type;
@@ -18,24 +25,28 @@ public class ProgramaNetFlix {
     public ProgramaNetFlix() {
     }
     
-    public ProgramaNetFlix(String id, String titulo, String show_type, String descricao, int release_year,
-            String age_certification, int runtime, String[] generos, String[] production_countries, Float temporadas,
-            String imdb_id, Float imdb_score, Float imdb_votes, Float tmdb_popularity, Float tmdb_score) {
-        this.id = id;
-        this.titulo = titulo;
-        this.show_type = show_type;
-        this.descricao = descricao;
-        this.release_year = release_year;
-        this.age_certification = age_certification;
-        this.runtime = runtime;
-        this.generos = generos;
-        this.production_countries = production_countries;
-        this.temporadas = temporadas;
-        this.imdb_id = imdb_id;
-        this.imdb_score = imdb_score;
-        this.imdb_votes = imdb_votes;
-        this.tmdb_popularity = tmdb_popularity;
-        this.tmdb_score = tmdb_score;
+    public ProgramaNetFlix(String[] data) {
+        
+        this.id = data[0];
+        this.titulo = data[1];
+        this.show_type = data[2];
+        this.descricao = data[3];
+        this.release_year = Integer.parseInt(data[4]);
+        this.age_certification = data[5];
+        this.runtime = Integer.parseInt(data[6]);
+        this.generos = regex(data[7]);
+        this.production_countries = regex(data[8]);
+        this.temporadas = data[9] != "" ? Float.parseFloat(data[9]) : 0.0f;
+        this.imdb_id = data[10];
+        this.imdb_score = data[11] != "" ? Float.parseFloat(data[11]) : 0.0f;
+        this.imdb_votes = data[12] != "" ? Float.parseFloat(data[12]) : 0.0f;
+        this.tmdb_popularity = data[13] != "" ? Float.parseFloat(data[13]) : 0.0f;
+        this.tmdb_score = data[14] != "" ? Float.parseFloat(data[14]) : 0.0f;
+    }
+
+    public String[] regex(String str){
+        String[] x = str.replaceAll(squote, "").replaceAll(left, "").replaceAll(right, "").replaceAll(" ", "").split(",");
+        return x;
     }
 
     public String getId() {

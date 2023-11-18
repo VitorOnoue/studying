@@ -70,8 +70,7 @@ public class BST {
     int comp = id.compareTo(node.getData().getId());
     if (comp > 0) {
       return searchHelper(node.getRight(), id);
-    }
-    else if (comp < 0) {
+    } else if (comp < 0) {
       return searchHelper(node.getLeft(), id);
     }
     return node;

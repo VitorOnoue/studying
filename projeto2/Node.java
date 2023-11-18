@@ -16,6 +16,10 @@ public class Node {
         this.fb = fb;
     }
 
+    public Node(ProgramaNetFlix data) {
+        this.data = data;
+    }
+
     public boolean hasLeftChild() {
         return left != null;
     }
