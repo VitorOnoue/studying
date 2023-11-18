@@ -76,68 +76,6 @@ public class BST {
     return node;
   }
 
-  public void insert(ProgramaNetFlix data) {
-    setRoot(insertHelper(getRoot(), null, data.getId()));
-  }
-
-  private Node insertHelper(Node node, Node parent, String id) {
-    if (node == null) {
-      // RETORNAR NODE
-    }
-
-    int comp = id.compareTo(node.getData().getId());
-
-    if (comp < 0) {
-      node.setLeft(insertHelper(node.getLeft(), node, id));
-    } else if (comp > 0) {
-      node.setRight(insertHelper(node.getRight(), node, id));
-    } else {
-      // Nessa implementação, não é permitida a inserção de duplicatas na BST.
-    }
-
-    return node;
-  }
-
-  public boolean remove(String id) {
-    setRoot(removeHelper(getRoot(), id));
-    return true;
-  }
-
-  private Node removeHelper(Node node, String id) {
-    if (node == null) {
-      return null;
-    }
-
-    int comp = id.compareTo(node.getData().getId());
-
-    if (comp < 0) {
-      node.setLeft(removeHelper(node.getLeft(), id));
-    } else if (comp > 0) {
-      node.setRight(removeHelper(node.getRight(), id));
-    } else {
-      node = removeNode(node);
-    }
-    return node;
-  }
-
-  private Node removeNode(Node node) {
-    if (node.isLeaf()) {
-      return null;
-    }
-
-    if (!node.hasLeftChild()) {
-      return node.getRight();
-    } else if (!node.hasRightChild()) {
-      return node.getLeft();
-    } else {
-      Node predecessor = predecessor(node.getData().getId());
-      node.setData(predecessor.getData());
-      node.setLeft(removeHelper(node.getLeft(), predecessor.getData().getId()));
-    }
-
-    return node;
-  }
-
   public Node findMin() {
     return findMinHelper(getRoot());
   }

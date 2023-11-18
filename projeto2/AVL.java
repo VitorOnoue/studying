@@ -19,6 +19,7 @@ public class AVL extends BST {
         Node aux;
 
         aux = desbA.getLeft();
+
         if (desbA.getParent() != null) { /* verifica se desb n o a raiz */
             if (desbA.getParent().getLeft() == desbA)
                 desbA.getParent().setLeft(aux);
@@ -80,12 +81,12 @@ public class AVL extends BST {
     }
 
     private Node insereNoAVL(Node noAtual, ProgramaNetFlix data) {
-        if (noAtual != null) {
+        if (noAtual != null) { // se arvore vazia/chegar no fim de uma branch
             if (noAtual.getData().getId().equals(data.getId())) {
                 return noAtual;
             }
-            int comp = noAtual.getData().getId().compareTo(data.getId());
-            if (comp > 0) {
+            int comp = data.getId().compareTo(noAtual.getData().getId());
+            if (comp < 0) {
                 noAtual.setLeft(insereNoAVL(noAtual.getLeft(), data));
                 noAtual.getLeft().setParent(noAtual);
                 if (flagInsercao) {
@@ -100,7 +101,7 @@ public class AVL extends BST {
                         case 1:
                             if ((noAtual.getLeft()).getFb() == 1) {
                                 noAtual = rotacaoLL(noAtual);
-                                // Arrumando os fatores ap s a rota o
+                                // Arrumando os fatores após a rota o
                                 noAtual.setFb(0);
                                 (noAtual.getRight()).setFb(0);
                             } else {
@@ -128,12 +129,12 @@ public class AVL extends BST {
                 if (flagInsercao) {
                     switch (noAtual.getFb()) {
                         case -1:
-                            if ((noAtual.getRight()).getFb() == -1) {
+                            if (noAtual.getRight().getFb() == -1) {
                                 noAtual = rotacaoRR(noAtual);
                                 // Arrumando os fatores após a rotação
                                 noAtual.setFb(0);
                                 (noAtual.getLeft()).setFb(0);
-                            } else {
+                            } else if (noAtual.getRight().getFb() == 1) {
                                 noAtual = rotacaoRL(noAtual);
                                 // Arrumando os fatores após a rotação
                                 if (noAtual.getFb() == 0) { // 1o Caso
@@ -148,6 +149,9 @@ public class AVL extends BST {
                                 }
                                 noAtual.setFb(0);
                             }
+                            else {  
+                                noAtual.setFb(0);
+                            }
                             flagInsercao = false;
                             break;
                         case 0:
@@ -157,11 +161,12 @@ public class AVL extends BST {
                             noAtual.setFb(0);
                             flagInsercao = false;
                             break;
+
                     }
                 }
             }
         } else {
-            noAtual = new Node(data, null, null, null, 0); // CRIAR NODE
+            noAtual = new Node(data, null, null, null, 0);
             flagInsercao = true;
         }
         return (noAtual);
@@ -322,5 +327,13 @@ public class AVL extends BST {
             noRemovido = null;
         }
         return (noAtual);
+    }
+
+    public void inordertraversal(Node root) {
+        if (root != null) {
+            inordertraversal(root.getLeft());
+            System.out.print(root.getData().getId() + " ");
+            inordertraversal(root.getRight());
+        }
     }
 }

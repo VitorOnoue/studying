@@ -2,20 +2,19 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.io.File;
 
-public class Main{
+public class Main {
     public static void main(String[] args) {
         try {
             AVL avl = new AVL();
             Scanner s = new Scanner(new File("titles.csv"));
             s.nextLine();
-            int i = 0;
-            while(i < 5){
-                i++;
+            while (s.hasNextLine()) {
                 String[] infos = splitter(s.nextLine());
-                ProgramaNetFlix pn = new ProgramaNetFlix(infos);    
+                ProgramaNetFlix pn = new ProgramaNetFlix(infos);
                 Node node = new Node(pn);
                 avl.insert(node);
             }
+            avl.inordertraversal(avl.getRoot());
             s.close();
         } catch (FileNotFoundException e) {
             System.out.println(e);
