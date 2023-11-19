@@ -148,8 +148,7 @@ public class AVL extends BST {
                                     (noAtual.getLeft()).setFb(0);
                                 }
                                 noAtual.setFb(0);
-                            }
-                            else {  
+                            } else {
                                 noAtual.setFb(0);
                             }
                             flagInsercao = false;
