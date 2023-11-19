@@ -328,12 +328,4 @@ public class AVL extends BST {
         }
         return (noAtual);
     }
-
-    public void inordertraversal(Node root) {
-        if (root != null) {
-            inordertraversal(root.getLeft());
-            System.out.print(root.getData().getId() + " ");
-            inordertraversal(root.getRight());
-        }
-    }
 }
