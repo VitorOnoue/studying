@@ -328,4 +328,46 @@ public class AVL extends BST {
         }
         return (noAtual);
     }
+
+    public void save(Node node, StringBuilder sb) {
+        if (node != null) {
+            save(node.getLeft(), sb);
+            ProgramaNetFlix data = node.getData();
+            String genres = "[", countries = "[";
+            int i;
+            if (data.getGeneros().length == 1) {
+                genres += "'" + data.getGeneros()[0] + "']";
+            } else {
+                for (i = 0; i < data.getGeneros().length - 1; i++) {
+                    genres += "'" + data.getGeneros()[i] + "', ";
+                }
+                genres += "'" + data.getGeneros()[i] + "']";
+            }
+            if (data.getProduction_countries().length == 1) {
+                countries += "'" + data.getProduction_countries()[0] + "']";
+            } else {
+                for (i = 0; i < data.getProduction_countries().length - 1; i++) {
+                    countries += "'" + data.getProduction_countries()[i] + "', ";
+                }
+                countries += "'" + data.getProduction_countries()[i] + "']";
+            }
+            sb.append(
+                    data.getId() + ";" +
+                            data.getTitulo() + ";" +
+                            data.getShow_type() + ";" +
+                            data.getDescricao() + ";" +
+                            data.getRelease_year() + ";" +
+                            data.getAge_certification() + ";" +
+                            data.getRuntime() + ";" +
+                            genres + ";" +
+                            countries + ";" +
+                            data.getTemporadas() + ";" +
+                            data.getImdb_id() + ";" +
+                            data.getImdb_score() + ";" +
+                            data.getImdb_votes() + ";" +
+                            data.getTmdb_popularity() + ";" +
+                            data.getTmdb_score() + ";\n");
+            save(node.getRight(), sb);
+        }
+    }
 }
