@@ -254,7 +254,9 @@ public class BST {
   public Search searchPrograma(String id) {
     Search s = new Search(id, "", 0);
     Node node = searchProgramaHelper(getRoot(), s);
-    s.setTitulo(node.getData().getTitulo());
+    if (node != null) {
+      s.setTitulo(node.getData().getTitulo());
+    }
     return s;
   }
 
@@ -277,69 +279,6 @@ public class BST {
       inordertraversal(root.getLeft());
       System.out.print(root.getData().getId() + " ");
       inordertraversal(root.getRight());
-    }
-  }
-
-  public void showSeasonsImdb_score(Node root) {
-    if (root != null) {
-      showSeasonsImdb_score(root.getLeft());
-      ProgramaNetFlix programa = root.getData();
-      if (programa.getShow_type().equals("SHOW") && programa.getTemporadas() > 200) {
-        System.out.println("Título: " + programa.getTitulo() + ", Temporadas: " + programa.getTemporadas() + ", Nota: " + programa.getImdb_score());
-      }
-      showSeasonsImdb_score(root.getRight());
-    }
-  }
-
-  public void notUSBefore1960(Node root) {
-    if (root != null) {
-      notUSBefore1960(root.getLeft());
-      ProgramaNetFlix programa = root.getData();
-      if (programa.getRelease_year() < 1960 && !programa.getProduction_countries().equals("US")) {
-        System.out.println("ID: " + programa.getId() + ", Ano de produção: "
-            + programa.getRelease_year() + ", País de origem: " + programa.getProduction_countries());
-      }
-      notUSBefore1960(root.getRight());
-    }
-  }
-
-  public void showImdbVotes_score(Node root) {
-    if (root != null) {
-      ProgramaNetFlix programa = root.getData();
-      if (programa.getShow_type().equals("SHOW") && programa.getImdb_score() > 75
-          && programa.getImdb_votes() > 200000) {
-        System.out.println(
-            "IMDB ID: " + programa.getImdb_id() + ", Nota: " + programa.getImdb_score() + ", Votos: "
-                + programa.getImdb_votes());
-      }
-      showImdbVotes_score(root.getLeft());
-      showImdbVotes_score(root.getRight());
-    }
-  }
-
-  public void dramaMovies100min(Node root) {
-    if (root != null) {
-      ProgramaNetFlix programa = root.getData();
-      if (programa.getGeneros().equals("Drama") && programa.getRuntime() > 100) {
-        String certificacao = programa.getAge_certification();
-        String filme = programa.getTitulo();
-        System.out.println("Filme: " + filme + ", Certificação de idade: " + certificacao);
-      }
-      dramaMovies100min(root.getLeft());
-      dramaMovies100min(root.getRight());
-    }
-  }
-
-  public void moviePopularity_score(Node root) {
-    if (root != null) {
-      ProgramaNetFlix programa = root.getData();
-      moviePopularity_score(root.getLeft());
-      moviePopularity_score(root.getRight());
-      if (programa.getShow_type().equals("Movie") && programa.getTmdb_popularity() > 5000
-          && programa.getTmdb_score() > 75) {
-        String id = programa.getId();
-        System.out.println("ID do filme com popularidade TMDB maior que 5000 e nota TMDB maior que 75: " + id);
-      }
     }
   }
 

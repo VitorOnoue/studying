@@ -1,15 +1,17 @@
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.Scanner;
+import java.util.ArrayList;
 
 import java.io.File;
 import java.io.FileWriter;
+
+import java.io.IOException;
+import java.io.FileNotFoundException;
 
 public class Main {
     static int showCounter = 0;
     static int movieCounter = 0;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         Scanner s = new Scanner(System.in);
         BST bst = new BST();
         AVL avl = new AVL();
@@ -37,11 +39,11 @@ public class Main {
                         dataset.nextLine();
                         while (dataset.hasNextLine()) {
                             String[] infos = splitter(dataset.nextLine());
-                            boolean valid;
+                            boolean valid = true;
                             if (infos[3].equals("SHOW")) { // infos[3] = tipo do programa
-                                valid = validateShow(infos);
+                            valid = validateShow(infos);
                             } else {
-                                valid = validateMovie(infos, 9); // campo 9 = temporadas
+                            valid = validateMovie(infos, 9); // campo 9 = temporadas
                             }
                             if (valid) {
                                 ProgramaNetFlix pn = new ProgramaNetFlix(infos);
@@ -60,19 +62,25 @@ public class Main {
                     System.out.println("Análise de dados");
                     System.out.println("****************");
 
-                    System.out.println("1: Todas as séries com mais de 20 temporadas e suas notas IMDB");
-                    System.out.println("2: ID dos programas produzidos fora dos estados unidos antes de 1960");
-                    System.out.println("3: IMBD ID de series com mais de 200.000 votos IMDB e score maior que 75");
+                    System.out.println("1: As dez séries com melhores notas no IMDB que possuem mais de 5 temporadas");
+                    System.out.println("2: ID dos programas produzidos fora dos Estados Unidos depois de 2021");
+                    System.out.println("3: IMBD ID de séries com mais de 200.000 votos IMDB e score maior que 7.5");
+                    System.out.println("4: Nome de filmes do gênero drama com mais de 100 minutos de duração");
                     System.out.println(
-                            "4: Nome de filmes do gênero drama com mais de 100 minutos de duração agrupados por certificação de idade");
-                    System.out
-                            .println("5: ID dos filmes com popularidade tmdb maior que 5000 e nota tmdb maior que 75");
+                            "5: Descrição dos filmes com popularidade tmdb maior que 5 e nota tmdb maior que 7.5");
 
+                    System.out.print("\nDigite a opção desejada: ");
                     int opcaoAnalise = s.nextInt();
 
                     switch (opcaoAnalise) {
                         case 1:
-                            avl.showSeasonsImdb_score(avl.getRoot());
+                            ArrayList<Float> notas = new ArrayList<Float>();
+                            ArrayList<String> titulos = new ArrayList<String>();
+                            avl.showSeasonsImdb_score(avl.getRoot(), notas, titulos);
+                            avl.bubbleSort(notas, titulos);
+                            for (int i = 0; i < 10; i++) {
+                                System.out.println("Título: " + titulos.get(i) + " - IMDB: " + notas.get(i));
+                            }
                             break;
 
                         case 2:
@@ -101,7 +109,7 @@ public class Main {
                 case 3:
                     System.out.print("Digite a categoria do programa (SHOW ou MOVIE): ");
                     String categoria = s.nextLine().toUpperCase();
-                    System.out.print("\nDigite:\nO id do programa: ");
+                    System.out.print("Digite o id do programa: ");
                     String id = s.nextLine();
                     if (categoria.equals("SHOW")) {
                         id = "ts" + id;
@@ -111,7 +119,8 @@ public class Main {
                         System.out.println("Categoria inválida.");
                         break;
                     }
-                    String[] inserir = {id, "lorem ipsum", categoria, "lorem ipsum", "123", "lorem ipsum", "123", "[lorem, ipsum]", "[lorem, ipsum]", "123", "lorem ipsum", "12.3", "12.3", "12.3", "12.3"};
+                    String[] inserir = { id, "lorem ipsum", categoria, "lorem ipsum", "123", "lorem ipsum", "123",
+                            "[lorem, ipsum]", "[lorem, ipsum]", "123", "lorem ipsum", "12.3", "12.3", "12.3", "12.3" };
                     ProgramaNetFlix novoPrograma = new ProgramaNetFlix(inserir);
                     Node novoNode = new Node(novoPrograma);
                     bst.insert(novoNode);
@@ -122,12 +131,28 @@ public class Main {
                 case 4:
                     System.out.print("Digite o id de um programa para buscar: ");
                     String buscar = s.nextLine();
+
+                    long start = System.nanoTime();
                     BST.Search busca_bst = bst.searchPrograma(buscar);
+                    long end = System.nanoTime();
+                    long bst_time = end - start;
+                    if (busca_bst.getTitulo().equals("")) {
+                        System.out.println("Programa não encontrado na BST.");
+                    } else {
+                        System.out.println("BST - Título: " + busca_bst.getTitulo());
+                        System.out.println("BST - Comparações: " + busca_bst.getCount() + " - Tempo de execução: " + bst_time);
+                    }
+
+                    start = System.nanoTime();
                     BST.Search busca_avl = avl.searchPrograma(buscar);
-                    System.out.println("BST - Título: " + busca_bst.getTitulo());
-                    System.out.println("BST - Comparações: " + busca_bst.getCount());
-                    System.out.println("AVL - Título: " + busca_avl.getTitulo());
-                    System.out.println("AVL - Comparações: " + busca_avl.getCount());
+                    end = System.nanoTime();
+                    long avl_time = end - start;
+                    if (busca_avl.getTitulo().equals("")) {
+                        System.out.println("Programa não encontrado na AVL.");  
+                    } else {
+                        System.out.println("AVL - Título: " + busca_avl.getTitulo());
+                        System.out.println("AVL - Comparações: " + busca_avl.getCount() + " - Tempo de execução: " + avl_time);
+                    }
                     break;
 
                 case 5:
@@ -170,7 +195,6 @@ public class Main {
                     break;
 
                 case 8:
-                    avl.inordertraversal(avl.getRoot());
                     System.out.println("\nEncerrando aplicação...");
                     break;
 

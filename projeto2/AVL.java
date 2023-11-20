@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class AVL extends BST {
 
     private int nElem; // Número de elementos (nós) na árvore
@@ -326,6 +328,99 @@ public class AVL extends BST {
             noRemovido = null;
         }
         return (noAtual);
+    }
+
+    public void bubbleSort(ArrayList<Float> x, ArrayList<String> y) {
+        int size = x.size();
+        for (int i = 0; i < size - 1; i++) {
+            for (int j = 0; j < size - i - 1; j++) {
+                if (x.get(j) < x.get(j + 1)) {
+                    Float aux_x = x.get(j);
+                    x.set(j, x.get(j + 1));
+                    x.set(j + 1, aux_x);
+                    String aux_y = y.get(j);
+                    y.set(j, y.get(j + 1));
+                    y.set(j + 1, aux_y);
+                }
+            }
+        }
+    }
+
+    public void showSeasonsImdb_score(Node root, ArrayList<Float> notas, ArrayList<String> titulos) {
+        if (root != null) {
+            showSeasonsImdb_score(root.getLeft(), notas, titulos);
+            ProgramaNetFlix programa = root.getData();
+            if (programa.getShow_type().equals("SHOW") && programa.getTemporadas() > 5) {
+                notas.add(programa.getImdb_score());
+                titulos.add(programa.getTitulo());
+            }
+            showSeasonsImdb_score(root.getRight(), notas, titulos);
+        }
+    }
+
+    public void notUSBefore1960(Node root) {
+        if (root != null) {
+            ProgramaNetFlix programa = root.getData();
+            String[] paises = programa.getProduction_countries();
+            boolean contains = false;
+            for (String str : paises) {
+                if (str.equals("US")) {
+                    contains = true;
+                }
+            }
+            if (!contains && programa.getRelease_year() < 1980) {
+                System.out.println("ID: " + programa.getId() + ", Ano de produção: " + programa.getRelease_year());
+            }
+            notUSBefore1960(root.getLeft());
+            notUSBefore1960(root.getRight());
+        }
+    }
+
+    public void showImdbVotes_score(Node root) {
+        if (root != null) {
+            ProgramaNetFlix programa = root.getData();
+            if (programa.getShow_type().equals("SHOW") && programa.getImdb_score() > 7.5
+                    && programa.getImdb_votes() > 200000) {
+                System.out.println(
+                        "IMDB ID: " + programa.getImdb_id() + ", Nota: " + programa.getImdb_score() + ", Votos: "
+                                + programa.getImdb_votes());
+            }
+            showImdbVotes_score(root.getLeft());
+            showImdbVotes_score(root.getRight());
+        }
+    }
+
+    public void dramaMovies100min(Node root) {
+        if (root != null) {
+            ProgramaNetFlix programa = root.getData();
+            String[] generos = programa.getGeneros();
+            boolean contains = false;
+            for (String str : generos) {
+                if (str.equals("drama")) {
+                    contains = true;
+                }
+            }
+            if (contains && programa.getRuntime() > 100) {
+                String certificacao = programa.getAge_certification();
+                String filme = programa.getTitulo();
+                System.out.println("Filme: " + filme + ", Certificação de idade: " + certificacao);
+            }
+            dramaMovies100min(root.getLeft());
+            dramaMovies100min(root.getRight());
+        }
+    }
+
+    public void moviePopularity_score(Node root) {
+        if (root != null) {
+            ProgramaNetFlix programa = root.getData();
+            moviePopularity_score(root.getLeft());
+            moviePopularity_score(root.getRight());
+            if (programa.getShow_type().equals("MOVIE") && programa.getTmdb_popularity() > 5
+                    && programa.getTmdb_score() > 7.5) {
+                String desc = programa.getDescricao();
+                System.out.println("Descrição: " + desc);
+            }
+        }
     }
 
     public void save(Node node, StringBuilder sb) {
