@@ -330,11 +330,12 @@ public class AVL extends BST {
         return (noAtual);
     }
 
-    public void bubbleSort(ArrayList<Float> x, ArrayList<String> y) {
+    public void bubbleSort(ArrayList<Float> x, ArrayList<String> y, int sort_type) {
         int size = x.size();
         for (int i = 0; i < size - 1; i++) {
             for (int j = 0; j < size - i - 1; j++) {
-                if (x.get(j) < x.get(j + 1)) {
+                boolean troca = sort_type == 1 ? x.get(j) < x.get(j + 1) : x.get(j) > x.get(j + 1);
+                if (troca) {
                     Float aux_x = x.get(j);
                     x.set(j, x.get(j + 1));
                     x.set(j + 1, aux_x);
@@ -358,7 +359,7 @@ public class AVL extends BST {
         }
     }
 
-    public void notUSBefore1960(Node root) {
+    public void notUSBefore1980(Node root) {
         if (root != null) {
             ProgramaNetFlix programa = root.getData();
             String[] paises = programa.getProduction_countries();
@@ -369,10 +370,12 @@ public class AVL extends BST {
                 }
             }
             if (!contains && programa.getRelease_year() < 1980) {
-                System.out.println("ID: " + programa.getId() + ", Ano de produção: " + programa.getRelease_year());
+                System.out.println(
+                        "\nTítulo: " + programa.getTitulo() + " - Ano de produção: " + programa.getRelease_year()
+                                + " - Tipo: " + programa.getShow_type() + "\nSinopse: " + programa.getDescricao());
             }
-            notUSBefore1960(root.getLeft());
-            notUSBefore1960(root.getRight());
+            notUSBefore1980(root.getLeft());
+            notUSBefore1980(root.getRight());
         }
     }
 
@@ -381,44 +384,42 @@ public class AVL extends BST {
             ProgramaNetFlix programa = root.getData();
             if (programa.getShow_type().equals("SHOW") && programa.getImdb_score() > 7.5
                     && programa.getImdb_votes() > 200000) {
-                System.out.println(
-                        "IMDB ID: " + programa.getImdb_id() + ", Nota: " + programa.getImdb_score() + ", Votos: "
-                                + programa.getImdb_votes());
+                System.out.println("IMDB ID: " + programa.getImdb_id() + " - Votos IMDB: " + programa.getImdb_votes()
+                        + " - Nota IMDB: " + programa.getImdb_score());
             }
             showImdbVotes_score(root.getLeft());
             showImdbVotes_score(root.getRight());
         }
     }
 
-    public void dramaMovies100min(Node root) {
+    public void docuMovies(Node root) {
         if (root != null) {
             ProgramaNetFlix programa = root.getData();
             String[] generos = programa.getGeneros();
             boolean contains = false;
             for (String str : generos) {
-                if (str.equals("drama")) {
+                if (str.equals("documentation")) {
                     contains = true;
                 }
             }
-            if (contains && programa.getRuntime() > 100) {
-                String certificacao = programa.getAge_certification();
-                String filme = programa.getTitulo();
-                System.out.println("Filme: " + filme + ", Certificação de idade: " + certificacao);
+            if (contains && programa.getRuntime() > 150) {
+                Float horas = (float) programa.getRuntime() / 60;
+                System.out.printf("Filme: %s - Duração: %.2f\n", programa.getTitulo(), horas);
             }
-            dramaMovies100min(root.getLeft());
-            dramaMovies100min(root.getRight());
+            docuMovies(root.getLeft());
+            docuMovies(root.getRight());
         }
     }
 
-    public void moviePopularity_score(Node root) {
+    public void ageTMDB(Node root, ArrayList<Float> popularidade, ArrayList<String> titulos) {
         if (root != null) {
             ProgramaNetFlix programa = root.getData();
-            moviePopularity_score(root.getLeft());
-            moviePopularity_score(root.getRight());
-            if (programa.getShow_type().equals("MOVIE") && programa.getTmdb_popularity() > 5
-                    && programa.getTmdb_score() > 7.5) {
-                String desc = programa.getDescricao();
-                System.out.println("Descrição: " + desc);
+            ageTMDB(root.getLeft(), popularidade, titulos);
+            ageTMDB(root.getRight(), popularidade, titulos);
+            Float tmdb = programa.getTmdb_score();
+            if (programa.getAge_certification().equals("PG-13") && tmdb < 6) {
+                popularidade.add(programa.getTmdb_popularity());
+                titulos.add(programa.getTitulo());
             }
         }
     }

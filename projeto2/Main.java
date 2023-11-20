@@ -63,11 +63,10 @@ public class Main {
                     System.out.println("****************");
 
                     System.out.println("1: As dez séries com melhores notas no IMDB que possuem mais de 5 temporadas");
-                    System.out.println("2: ID dos programas produzidos fora dos Estados Unidos depois de 2021");
-                    System.out.println("3: IMBD ID de séries com mais de 200.000 votos IMDB e score maior que 7.5");
-                    System.out.println("4: Nome de filmes do gênero drama com mais de 100 minutos de duração");
-                    System.out.println(
-                            "5: Descrição dos filmes com popularidade tmdb maior que 5 e nota tmdb maior que 7.5");
+                    System.out.println("2: Sinopses dos programas produzidos fora dos Estados Unidos antes de 1980");
+                    System.out.println("3: IMDB ID de séries com mais de 200.000 votos e nota maior que 7.5 pelo IMDB");
+                    System.out.println("4: Filmes de drama com mais de duas horas e meia de duração");
+                    System.out.println("5: Os cinco programas de adolescentes (mais de 13 anos de idade) menos populares e com notas menores que 6 pelo TMDB");
 
                     System.out.print("\nDigite a opção desejada: ");
                     int opcaoAnalise = s.nextInt();
@@ -75,16 +74,16 @@ public class Main {
                     switch (opcaoAnalise) {
                         case 1:
                             ArrayList<Float> notas = new ArrayList<Float>();
-                            ArrayList<String> titulos = new ArrayList<String>();
-                            avl.showSeasonsImdb_score(avl.getRoot(), notas, titulos);
-                            avl.bubbleSort(notas, titulos);
+                            ArrayList<String> titulos_series = new ArrayList<String>();
+                            avl.showSeasonsImdb_score(avl.getRoot(), notas, titulos_series);
+                            avl.bubbleSort(notas, titulos_series, 1);
                             for (int i = 0; i < 10; i++) {
-                                System.out.println("Título: " + titulos.get(i) + " - IMDB: " + notas.get(i));
+                                System.out.println("Nome da série: " + titulos_series.get(i) + " - IMDB: " + notas.get(i));
                             }
                             break;
 
                         case 2:
-                            avl.notUSBefore1960(avl.getRoot());
+                            avl.notUSBefore1980(avl.getRoot());
                             break;
 
                         case 3:
@@ -92,18 +91,23 @@ public class Main {
                             break;
 
                         case 4:
-                            avl.dramaMovies100min(avl.getRoot());
+                            avl.docuMovies(avl.getRoot());
                             break;
 
                         case 5:
-                            avl.moviePopularity_score(avl.getRoot());
+                            ArrayList<Float> popularidade = new ArrayList<Float>();
+                            ArrayList<String> titulos_programas = new ArrayList<String>();
+                            avl.ageTMDB(avl.getRoot(), popularidade, titulos_programas);
+                            avl.bubbleSort(popularidade, titulos_programas, 0);
+                            for (int i = 0; i < 5; i++) {
+                                System.out.println("Título: " + titulos_programas.get(i) + " - Popularidade: " + popularidade.get(i));
+                            }
                             break;
 
                         default:
                             System.out.println("Opção inválida!");
                             break;
                     }
-
                     break;
 
                 case 3:
