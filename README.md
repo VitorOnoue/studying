@@ -6,4 +6,4 @@ This repo is where I post some of what I've learned so far.
 
 + AlgorithmAnalysis directory: contains a single C file. It is a college task that should solve a problem similar to the Knapsack problem. The goal was to use recursion, which was what the class was learning at the time.
 
-+ PythonLibraries directory: as the name suggests, contains notes/codes of my learning in Python libraries (Numpy, Matplotlib), to further develop my knowledge in AI.
++ PythonLibraries directory: as the name suggests, contains notes/codes of my learning in Python libraries (NumPy, Matplotlib), to further develop my knowledge in AI.
