@@ -1,9 +1,3 @@
-/*
-Bruno Gustavo Rocha – TIA: 32215029 
-Pedro Nogueira Ribeiro – TIA: 31842232 
-Vitor Kenzo Koga Onoue – TIA: 32246315 
-*/
-
 import java.util.Scanner;
 
 public class Main {

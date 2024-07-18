@@ -1,10 +1,3 @@
-/*
-Participantes:
-Bruno Gustavo Rocha - 32215029
-Pedro Nogueira Ribeiro - 31842232
-Vitor Kenzo Koga Onoue - 32246315
-*/
-
 import java.util.Stack;
 import java.util.Scanner;
 

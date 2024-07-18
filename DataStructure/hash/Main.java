@@ -1,9 +1,3 @@
-/*
-Bruno Gustavo Rocha
-Pedro Nogueira Ribeiro
-Vitor Kenzo Koga Onoue
-*/
-
 import java.util.LinkedList;
 import java.util.Random;
 
