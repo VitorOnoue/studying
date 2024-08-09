@@ -1,8 +1,10 @@
 # Sources I am getting based on
 
-+ https://www.youtube.com/watch?v=osKyvYJ3PRM - Large Language Models (LLMs) - Everything You NEED To Know
++ [Large Language Models (LLMs) - Everything You NEED To Know](https://www.youtube.com/watch?v=osKyvYJ3PRM)
 
-# Large Language Models (LLMs) - Everything You NEED To Know
+---
+
+## Large Language Models (LLMs) - Everything You NEED To Know
 
 + LLMs are a type of __neural network__, and LLMs are trained on massive amounts of data, generally data that can be found online
     + data can have tons of pre-processing before getting used by the LLM itself
