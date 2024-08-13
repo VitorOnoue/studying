@@ -1,6 +1,8 @@
 # Sources I am getting based on
 
-+ [Large Language Models (LLMs) - Everything You NEED To Know](https://www.youtube.com/watch?v=osKyvYJ3PRM)
++ [Large Language Models (LLMs) - Everything You NEED To Know](https://youtu.be/osKyvYJ3PRM?si=IFwyc8vHmKzpoYAh)
+
++ [[1hr Talk] Intro to Large Language Models](https://youtu.be/zjkBMFhNj_g?si=QY2BRyNSkOtIf0f0)
 
 ---
 

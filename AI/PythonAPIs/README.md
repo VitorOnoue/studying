@@ -1,8 +1,8 @@
 # Sources I am getting based on
 
-+ [Working with APIs in Python - Code in 10 Minutes](https://www.youtube.com/watch?v=hpc5jyVpUpw)
++ [Working with APIs in Python - Code in 10 Minutes](https://youtu.be/hpc5jyVpUpw?si=Y3mnS7masFyIP8ed)
 
-+ [Como CRIAR uma API com PYTHON [DO ZERO]](https://www.you'tube.com/watch?v=FBLAV1SbJFk)
++ [Como CRIAR uma API com PYTHON [DO ZERO]](https://youtu.be/FBLAV1SbJFk?si=rWaHRxD5LmxhP_JV)
 
 ---
 
