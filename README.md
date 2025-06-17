@@ -9,3 +9,5 @@ This repo is where I post some of what I've learned so far.
 + AI directory: as the name suggests, contains notes/codes of my learning in AI.
 
 + Also, my repo called bootcamp (https://github.com/VitorOnoue/bootcamp) contains notes of my Python Backend Developer studies.
+
++ Node directory: contains a simple song library API made with Node.js, Express and MongoDB.

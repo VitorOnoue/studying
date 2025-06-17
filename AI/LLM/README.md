@@ -77,6 +77,43 @@
         + and lastly, massive unemployment will happen due to LLMs - sooner or later, some professions may be swapped for the usage of AIs
             + lawyers? programmers? writers (for news, for example)?
 
-    + improvemnet ideas:
+    + improvement ideas:
         + __mixture of experts__: multiple LLMs merged and fine-tuned to specific subjects - when a prompt is received, one of the experts (fine-tuned LLM) is chosen to generate an answer
         + __multimodality__: being able to take input from many different source types
+
+---
+
+## [1hr Talk] Intro to Large Language Models
+
++ the information about llama-2-70b below was published by Meta itself.
+
++ llama-2-70b is Meta AI's LLM, and it is basically made of two files: a __parameters__ file and a __C code__ file
+    + the parameters file is 140GB, with 70 billions of parameters
+
++ resources to train this model:
+    + 10 TB of internet text data
+    + 6 thousands of GPUs, and for 12 days
+    + around 2 million USD in compute costs
+
++ check moment 11:30 for a diagram of the Transformer neural network architecture
+
++ the network itself has billions and billions of parameters scattered through it, and we know how to adjust/optimize them to make better predictions, but we dont know how they collaborate with each other to do that - but it works
+
++ __fine tuning__ is a training that comes after pre-training the model. Basically, just swap the LLM's training on internet documents to another dataset that the developer wishes
+    + here, we prioritize the __quality__ of the data over __quantity__
+    + the last time the model was trained, tons and tons of data were used to create a model that can answer generic questions
+    + the goal in this second training is to turn the model into a specialist in a specific area
+
++ fine tuning is way cheaper - could be done every once in a week, or even day
+
+### recap so far
+
+    stage 1: have a cluster of 6k GPUs and spend around 2 million USD to train around 10 TB of text - in 12 days, here's your model
+
+    stage 2: work on your dataset (hire people to create good data, for example) - this data usually contains instructions on how to operate, and also Q&A stuff - then, train the model with the new data
+
+    after stage 2, an assistant model is obtained, one that should be tested if it contains misbehaviors, if the responses are good enough, etc
+    and to correct wrong answers, fill in the correct answer as an example of training data, and in the next fine tuning, the model will become better at answering the question that it made a mistake last time
+
++ fine tuning is really necessary, as the base model is usually not too useful
+    + for example, Meta's llama base models will ask you more questions or something like it, if you ask them some
