@@ -15,26 +15,4 @@ connection.once("open", () => {
 const app = express();
 routes(app);
 
-// app.get("/songs/:id", (req, res) => {
-//     const index = songById(req.params.id);
-//     res.status(200).json(songs[index]);
-// });
-
-// app.post("/songs", (req, res) => {
-//     songs.push(req.body);
-//     res.status(201).send("song registered");
-// });
-
-// app.put("/songs/:id", (req, res) => {
-//     const index = songById(req.params.id);
-//     songs[index].title = req.body.title;
-//     res.status(200).json(songs);
-// });
-
-// app.delete("/songs/:id", (req, res) => {
-//     const index = songById(req.params.id);
-//     songs.splice(index, 1);
-//     res.status(200).json(songs);
-// });
-
 export default app;
