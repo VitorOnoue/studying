@@ -1,12 +1,12 @@
 import express from "express";
-import SongController from "../controllers/songController.js";
+import artistController from "../controllers/artistController.js";
 
 const routes = express.Router();
 
-routes.get("/songs", SongController.getAllSongs);
-routes.get("/songs/:id", SongController.getSongById);
-routes.post("/songs", SongController.createSong);
-routes.put("/songs/:id", SongController.updateSongById);
-routes.delete("/songs/:id", SongController.deleteSongById);
+routes.get("/artists", artistController.getAllArtists);
+routes.get("/artists/:id", artistController.getArtistById);
+routes.post("/artists", artistController.createArtist);
+routes.put("/artists/:id", artistController.updateArtistById);
+routes.delete("/artists/:id", artistController.deleteArtistById);
 
 export default routes;

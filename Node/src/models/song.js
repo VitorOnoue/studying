@@ -1,14 +1,11 @@
 import mongoose from "mongoose";
+import { artistSchema } from "./Artist.js";
 
 const songSchema = new mongoose.Schema({
     id: {
         type: mongoose.Schema.Types.ObjectId
     },
     title: {
-        type: String,
-        required: true
-    },
-    artist: {
         type: String,
         required: true
     },
@@ -19,6 +16,7 @@ const songSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    artist: artistSchema
 }, {
     versionKey: false
 });

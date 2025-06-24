@@ -1,68 +1,70 @@
-import song from "../models/Song.js";
+import {
+    artist
+} from "../models/Artist.js";
 
-class SongController {
-    static async getAllSongs(req, res) {
+class ArtistController {
+    static async getAllArtists(req, res) {
         try {
-            const songList = await song.find({});
-            res.status(200).json(songList);
+            const artistList = await artist.find({});
+            res.status(200).json(artistList);
         } catch (err) {
             res.status(500).json({
-                message: `${err.message} - failed to get songs`
+                message: `${err.message} - failed to get artists`
             });
         }
     };
 
-    static async getSongById(req, res) {
+    static async getArtistById(req, res) {
         try {
-            const songById = await song.findById(req.params.id);
-            res.status(200).json(songById);
+            const artistById = await artist.findById(req.params.id);
+            res.status(200).json(artistById);
         } catch (err) {
             res.status(500).json({
-                message: `${err.message} - failed to get song with id: ${req.params.id}`
+                message: `${err.message} - failed to get artist with id: ${req.params.id}`
             });
         }
     };
 
-    static async createSong(req, res) {
+    static async createArtist(req, res) {
         try {
-            const newSong = await song.create(req.body);
+            const newArtist = await artist.create(req.body);
             res.status(201).json({
-                message: "song registered successfully",
-                song: newSong
+                message: "artist registered successfully",
+                artist: newArtist
             });
         } catch (err) {
             res.status(500).json({
-                message: `${err.message} - failed to create song`
+                message: `${err.message} - failed to create artist`
             });
         }
     };
 
-    static async updateSongById(req, res) {
+    static async updateArtistById(req, res) {
         try {
-            await song.findByIdAndUpdate(req.params.id, req.body);
+            await artist.findByIdAndUpdate(req.params.id, req.body);
             res.status(200).json({
-                message: "song updated",
-                song: song
+                message: "artist updated",
+                document: artist
             });
         } catch (err) {
             res.status(500).json({
-                message: `${err.message} - failed to update song with id: ${req.params.id}`
+                message: `${err.message} - failed to update artist with id: ${req.params.id}`
             });
         }
     };
 
-    static async deleteSongById(req, res) {
+    static async deleteArtistById(req, res) {
         try {
-            await song.findByIdAndDelete(req.params.id);
+            await artist.findByIdAndDelete(req.params.id);
             res.status(200).json({
-                message: "song deleted"
+                message: "artist deleted"
             });
         } catch (err) {
             res.status(500).json({
-                message: `${err.message} - failed to delete song with id: ${req.params.id}`
+                message: `${err.message} - failed to delete artist with id: ${req.params.id}`
             });
         }
     };
 };
 
-export default SongController;
+export default ArtistController;

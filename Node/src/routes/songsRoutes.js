@@ -4,6 +4,7 @@ import SongController from "../controllers/songController.js";
 const routes = express.Router();
 
 routes.get("/songs", SongController.getAllSongs);
+routes.get("/songs/search", SongController.getSongsByArtist);
 routes.get("/songs/:id", SongController.getSongById);
 routes.post("/songs", SongController.createSong);
 routes.put("/songs/:id", SongController.updateSongById);

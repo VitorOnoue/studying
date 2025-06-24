@@ -1,4 +1,5 @@
 import song from "../models/Song.js";
+import { artist } from "../models/Artist.js";
 
 class SongController {
     static async getAllSongs(req, res) {
@@ -24,11 +25,14 @@ class SongController {
     };
 
     static async createSong(req, res) {
+        const newSong = req.body;
         try {
-            const newSong = await song.create(req.body);
+            const artistById = await artist.findById(newSong.artist);
+            const songData = { ...newSong, artist: { ...artistById._doc }};
+            const createSong = await song.create(songData);
             res.status(201).json({
                 message: "song registered successfully",
-                song: newSong
+                song: createSong
             });
         } catch (err) {
             res.status(500).json({
@@ -42,7 +46,7 @@ class SongController {
             await song.findByIdAndUpdate(req.params.id, req.body);
             res.status(200).json({
                 message: "song updated",
-                song: song
+                document: song
             });
         } catch (err) {
             res.status(500).json({
@@ -61,6 +65,17 @@ class SongController {
             res.status(500).json({
                 message: `${err.message} - failed to delete song with id: ${req.params.id}`
             });
+        }
+    };
+
+    // pretty sure this is not efficient
+    static async getSongsByArtist(req, res) {
+        const artistName = req.query.artist;
+        try {
+            const songsByArtist = await song.find({ "artist.name": artistName });
+            res.status(200).json(songsByArtist);
+        } catch (err) {
+            res.status(500).json({ message: `${err.message} - failed to get songs by artist`})
         }
     };
 };
