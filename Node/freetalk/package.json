@@ -1,0 +1,26 @@
+{
+  "name": "ts",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "compile": "tsc && node ./dist/main.js",
+    "start": "nodemon --watch src --ignore dist --ext ts --exec \"npm run compile\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@types/dotenv": "^6.1.1",
+    "@types/express": "^5.0.6",
+    "@types/mongoose": "^5.11.96",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "mongoose": "^8.20.4"
+  },
+  "type": "module",
+  "devDependencies": {
+    "@types/nodemon": "^1.19.6",
+    "nodemon": "^3.1.11"
+  }
+}
