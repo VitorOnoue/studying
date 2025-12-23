@@ -1,18 +1,31 @@
 import * as dotenv from 'dotenv';
 dotenv.config();
 
-import express from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import mongoose from 'mongoose';
 
 const PORT = 8080;
 
 const app = express();
 
+
+declare global {
+    interface CustomError extends Error {
+        status?: number
+    }
+}
+
 app.use(express.urlencoded({
     extended: false
 }));
 app.use(express.json());
 
+app.use((error: CustomError, req: Request, res: Response, next: NextFunction) => {
+    if(error.status) {
+        return res.status(error.status).json({ message: error.message });
+    }
+    res.status(500).json({ message: 'internal server error' });
+});
 
 const start = async () => {
     if (!process.env.MONGO_URL) {
