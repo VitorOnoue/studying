@@ -4,17 +4,11 @@ dotenv.config();
 import express, { Request, Response, NextFunction } from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
-import { newPostRouter, deletePostRouter, updatePostRouter, showPostRouter, newCommentRouter, deleteCommentRouter } from './routers/index.js';
+import { newPostRouter, deletePostRouter, updatePostRouter, showPostRouter, newCommentRouter, deleteCommentRouter, signupRouter, signinRouter, currentUserRouter, signoutRouter } from './routers/index.js';
 import cookieSession from 'cookie-session';
-import { requireAuth, currentUser } from './common/index.js';
+import { requireAuth, currentUser, NotFoundError, errorHandler } from './common/index.js';
 
 const PORT = 8080;
-
-declare global {
-    interface CustomError extends Error {
-        status?: number
-    }
-}
 
 const app = express();
 
@@ -36,6 +30,11 @@ app.use(cookieSession({
 
 app.use(currentUser);
 
+app.use(signupRouter);
+app.use(signinRouter);
+app.use(currentUserRouter);
+app.use(signoutRouter);
+
 // post routers
 app.use(requireAuth, newPostRouter);
 app.use(requireAuth, deletePostRouter);
@@ -47,18 +46,10 @@ app.use(requireAuth, newCommentRouter);
 app.use(requireAuth, deleteCommentRouter);
 
 app.use((req, res, next) => {
-    const error = new Error('not found') as CustomError;
-    console.log('caiu aqui');
-    error.status = 404;
-    next(error);
+    next(new NotFoundError());
 })
 
-app.use((error: CustomError, req: Request, res: Response, next: NextFunction) => {
-    if(error.status) {
-        return res.status(error.status).json({ message: error.message });
-    }
-    res.status(500).json({ message: 'internal server error' });
-});
+app.use(errorHandler);
 
 const start = async () => {
     if (!process.env.MONGO_URL) {

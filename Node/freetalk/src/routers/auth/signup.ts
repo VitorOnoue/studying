@@ -1,6 +1,7 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import { User } from '../../models/user.js';
 import jwt from 'jsonwebtoken';
+import { BadRequestError } from '../../common/index.js';
 
 const router = Router();
 
@@ -8,12 +9,7 @@ router.post('/signup', async (req: Request, res: Response, next: NextFunction) =
     const { email, password } = req.body;
 
     const user = await User.findOne({ email })
-
-    if (user) {
-        const error = new Error('user with this email already exists') as CustomError;
-        error.status = 400;
-        return next(error);
-    }
+    if (user) return next(new BadRequestError('wrong credentials!'));
 
     const newUser = new User({
         email,

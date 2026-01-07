@@ -1,6 +1,7 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import Comment from "../../models/comment.js";
 import Post from "../../models/post.js";
+import { BadRequestError } from '../../common/index.js';
 
 const router = Router();
 
@@ -9,16 +10,12 @@ router.delete('/api/comment/:commentId/delete/:postId', async (req: Request, res
     const postId = req.params.postId;
 
     if (!postId || !commentId) {
-        const error = new Error('postId and commentId are both required') as CustomError;
-        error.status = 400;
-        next(error);
+        return next(new BadRequestError('post id and comment id are required!'));
     }
     try {
         await Comment.findOneAndDelete({ _id: commentId });
     } catch (err) {
-        const error = new Error('comment cannot be deleted') as CustomError;
-        error.status = 500;
-        next(error);
+        next(new Error('comment cannot be deleted'));
     }
     const updatedPost = await Post.findOneAndUpdate(
         { _id: postId },

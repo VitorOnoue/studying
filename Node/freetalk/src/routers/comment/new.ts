@@ -1,6 +1,7 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import Comment from '../../models/comment.js';
 import Post from '../../models/post.js';
+import { BadRequestError } from '../../common/index.js';
 
 const router = Router();
 
@@ -8,16 +9,12 @@ router.post('/api/comment/new/:postId', async (req: Request, res: Response, next
     const { postId } = req.params;
     console.log(postId);
     if(!postId) {
-        const error = new Error('postId is required') as CustomError;
-        error.status = 400;
-        next(error);
+        return next(new BadRequestError('postId is required!'));
     }
     const { userName, content } = req.body;
 
     if(!content) {
-        const error = new Error('content is required') as CustomError;
-        error.status = 400;
-        next(error);
+        return next(new BadRequestError('content is required!'));
     }
 
     const newComment = new Comment({
