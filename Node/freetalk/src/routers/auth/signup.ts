@@ -11,7 +11,7 @@ router.post('/signup', async (req: Request, res: Response, next: NextFunction) =
     const user = await User.findOne({ email })
     if (user) return next(new BadRequestError('wrong credentials!'));
 
-    const newUser = new User({
+    const newUser = User.build({
         email,
         password
     });

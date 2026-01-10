@@ -1,5 +1,21 @@
 import mongoose from 'mongoose';
 import { authenticationService } from '../common/index.js';
+import { PostDoc } from './post.js';
+
+export interface UserDoc extends mongoose.Document {
+    email: string,
+    password: string,
+    posts?: Array<PostDoc>
+}
+
+export interface CreateUserDto {
+    email: string,
+    password: string
+}
+
+export interface UserModel extends mongoose.Model<UserDoc> {
+    build(dto: CreateUserDto): UserDoc;
+};
 
 const userSchema = new mongoose.Schema({
     email: {
@@ -18,11 +34,15 @@ const userSchema = new mongoose.Schema({
     ]
 })
 
-userSchema.pre('save', async function (done) {
+userSchema.pre('save', async function () {
     if(this.isModified('password') || this.isNew) {
        const hashedPassword = authenticationService.pwdToHash(this.get('password'));
         this.set('password, hashed');
     }
 });
 
-export const User = mongoose.model('User', userSchema);
+userSchema.statics.build = (createUserDto: CreateUserDto) => {
+    return new User(createUserDto);
+}
+
+export const User = mongoose.model<UserDoc, UserModel>('User', userSchema);

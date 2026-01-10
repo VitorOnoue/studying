@@ -17,11 +17,16 @@ router.delete('/api/comment/:commentId/delete/:postId', async (req: Request, res
     } catch (err) {
         next(new Error('comment cannot be deleted'));
     }
+
     const updatedPost = await Post.findOneAndUpdate(
         { _id: postId },
         { $pull: { comments: commentId } },
         { new: true }
     )
+    if (!updatedPost) {
+        return next(new Error());
+    }
+
     res.status(200).send(updatedPost);
 });
 

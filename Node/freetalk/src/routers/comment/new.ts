@@ -17,7 +17,7 @@ router.post('/api/comment/new/:postId', async (req: Request, res: Response, next
         return next(new BadRequestError('content is required!'));
     }
 
-    const newComment = new Comment({
+    const newComment = Comment.build({
         userName: userName ? userName : 'you dont know who i am',
         content: content
     });
